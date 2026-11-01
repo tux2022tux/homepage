@@ -1,338 +1,72 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-tema="vidro">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>divonei.com — Trilhas do Conhecimento</title>
-<meta name="description" content="Matemática, ciência, arte e vida em caminhos que se conectam. Projetos educacionais de livre acesso.">
-<meta property="og:title" content="divonei.com — Trilhas do Conhecimento">
-<meta property="og:description" content="Matemática, ciência, arte e vida em caminhos que se conectam.">
+<title>divonei.com — Matemática em perspectiva</title>
+<meta name="description" content="Estruturas, padrões e ideias que conectam ciência, arte e vida. Projetos educacionais de matemática de livre acesso.">
+<meta property="og:title" content="divonei.com — Matemática em perspectiva">
+<meta property="og:description" content="Estruturas, padrões e ideias que conectam ciência, arte e vida.">
 <meta property="og:url" content="https://www.divonei.com/">
-<meta name="theme-color" content="#0b1222">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b1222'/%3E%3Cpath d='M6 24 C12 24 10 9 17 9 S22 20 26 8' fill='none' stroke='%23e8b04a' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='26' cy='8' r='2.6' fill='%23f6d48a'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#f2ece1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f2ece1'/%3E%3Cpath d='M8 6 C14 14 14 18 8 26 M24 6 C18 14 18 18 24 26 M8 6 L24 26 M24 6 L8 26 M12 6 L20 26 M20 6 L12 26' fill='none' stroke='%232b241c' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --night:#0b1222; --night-2:#121c33; --night-3:#1b2846;
-    --ink:#f3ead8; --ink-soft:#c9c0ad; --ink-mute:#8d8778;
-    --gold:#e8b04a; --gold-soft:#f6d48a;
-    --line:rgba(243,234,216,.12);
+    --bg:#f2ece1; --bg-2:#ebe3d5;
+    --ink:#2b241c; --ink-soft:#5c5245; --ink-mute:#8b806f;
+    --gold:#a86f1c;
+    --line:rgba(43,36,28,.12);
+    --glass-bg:rgba(255,252,246,.42); --glass-bg-strong:rgba(250,246,238,.74);
+    --glass-border:rgba(255,255,255,.75); --glass-hi:rgba(255,255,255,.55);
+    --glass-shadow:0 24px 50px -28px rgba(80,55,20,.35);
     --serif:"Fraunces", Georgia, serif;
     --sans:"Instrument Sans", system-ui, sans-serif;
     --wrap:1180px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{background:var(--night);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
   a{color:inherit}
-  img,svg,canvas{display:block}
+  svg,canvas{display:block}
   .wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
   :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
 
-  /* ---------- header ---------- */
-  header.top{position:absolute;inset:0 0 auto 0;z-index:10}
-  header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:84px}
-  .brand{font-family:var(--serif);font-size:1.45rem;font-weight:400;text-decoration:none;letter-spacing:-.01em}
-  .brand span{color:var(--gold)}
-  nav.main{display:flex;gap:30px}
-  nav.main a{text-decoration:none;font-size:.93rem;color:var(--ink-soft);transition:color .2s}
-  nav.main a:hover{color:var(--ink)}
-  .menu-btn{display:none;background:none;border:0;color:var(--ink);cursor:pointer;padding:8px}
-
-  /* ---------- hero ---------- */
-  .hero{position:relative;min-height:100svh;overflow:hidden;
-    background:
-      radial-gradient(1200px 500px at 70% 110%, rgba(232,176,74,.16), transparent 60%),
-      radial-gradient(900px 600px at 15% 0%, rgba(61,92,160,.25), transparent 65%),
-      linear-gradient(180deg,#070c18 0%, var(--night) 45%, var(--night-2) 100%);}
-  #stars{position:absolute;inset:0;width:100%;height:100%}
-  .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;min-height:100svh;padding-top:84px;padding-bottom:180px}
-  .eyebrow{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
-  h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.9rem,6.4vw,5.4rem);line-height:1.02;letter-spacing:-.025em}
-  h1 em{font-style:italic;color:var(--gold-soft)}
-  .lead{margin-top:24px;font-size:1.15rem;color:var(--ink-soft);max-width:30ch}
-  .btn{display:inline-flex;align-items:center;gap:10px;margin-top:36px;padding:13px 24px;border-radius:999px;background:var(--ink);color:var(--night);text-decoration:none;font-weight:600;font-size:.95rem;transition:transform .2s, background .2s}
-  .btn:hover{background:var(--gold-soft);transform:translateY(-2px)}
-  .btn svg{transition:transform .2s}.btn:hover svg{transform:translateX(3px)}
-
-  .trail{position:relative;height:min(620px,72svh)}
-  .trail svg{width:100%;height:100%;overflow:visible}
-  .trail .node-label{font-family:var(--sans);font-size:15px;fill:var(--ink);cursor:pointer;transition:fill .2s}
-  .trail a:hover .node-label,.trail a:focus .node-label{fill:var(--gold-soft)}
-  .trail a:hover .node-dot,.trail a:focus .node-dot{r:9}
-  .node-dot{transition:r .2s}
-
-  #mosaic{position:absolute;left:0;right:0;bottom:0;width:100%;height:230px;z-index:1}
-  .quote{position:absolute;right:max(28px,calc((100vw - var(--wrap))/2 + 28px));bottom:250px;z-index:3;font-family:var(--serif);font-style:italic;font-weight:300;font-size:1.05rem;text-align:right;color:var(--ink);text-shadow:0 2px 18px rgba(0,0,0,.8);max-width:340px}
-
-  /* ---------- sections ---------- */
-  section{padding:120px 0}
-  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:30px;margin-bottom:56px;border-bottom:1px solid var(--line);padding-bottom:22px}
-  .sec-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,3.6vw,2.9rem);letter-spacing:-.02em}
-  .sec-head p{color:var(--ink-mute);max-width:42ch;font-size:.98rem}
-  .num{font-family:var(--serif);color:var(--gold);font-size:.95rem;margin-right:14px;font-style:italic}
-
-  /* trilhas */
-  .areas{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-  .area{background:var(--night);padding:34px 30px 38px;position:relative;transition:background .25s}
-  .area:hover{background:var(--night-2)}
-  .area .chip{width:38px;height:38px;margin-bottom:22px}
-  .area h3{font-family:var(--serif);font-weight:400;font-size:1.4rem;margin-bottom:8px}
-  .area p{color:var(--ink-soft);font-size:.95rem}
-
-  /* projetos */
-  #projetos{background:var(--night-2)}
-  .projects{display:grid;grid-template-columns:1.4fr 1fr;gap:28px}
-  .proj{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--night);display:flex;flex-direction:column;text-decoration:none;transition:transform .25s,border-color .25s}
-  a.proj:hover{transform:translateY(-4px);border-color:rgba(232,176,74,.5)}
-  .proj .art{aspect-ratio:16/9;background:var(--night-3);position:relative}
-  .proj .art svg{width:100%;height:100%}
-  .proj .body{padding:26px 28px 30px}
-  .proj h3{font-family:var(--serif);font-weight:400;font-size:1.6rem;margin:8px 0 8px}
-  .proj p{color:var(--ink-soft);font-size:.96rem}
-  .tag{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--ink-mute)}
-  .tag.live{border-color:rgba(232,176,74,.55);color:var(--gold-soft)}
-  .proj .go{margin-top:18px;display:inline-flex;gap:8px;align-items:center;color:var(--gold-soft);font-weight:500;font-size:.92rem}
-  .stack{display:grid;gap:28px}
-  .stack .proj .body{padding:24px 26px}
-
-  /* materiais / escritos */
-  .split{display:grid;grid-template-columns:1fr 1fr;gap:64px}
-  .soon{border-top:1px solid var(--line);padding-top:26px}
-  .soon h3{font-family:var(--serif);font-weight:300;font-size:2rem;margin-bottom:12px}
-  .soon p{color:var(--ink-soft)}
-  .soon ul{list-style:none;margin-top:22px}
-  .soon li{padding:13px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;color:var(--ink-soft);font-size:.95rem}
-  .soon li span{color:var(--ink-mute);font-size:.82rem}
-
-  /* sobre */
-  #sobre{background:linear-gradient(180deg,var(--night) 0%, #0e1830 100%)}
-  .about{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px;align-items:start}
-  .about blockquote{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.6rem,2.6vw,2.2rem);line-height:1.25;color:var(--gold-soft)}
-  .about p{color:var(--ink-soft);margin-bottom:18px;font-size:1.05rem}
-  .about .links{display:flex;gap:22px;margin-top:28px}
-  .about .links a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:2px}
-
-  footer{border-top:1px solid var(--line);padding:36px 0;color:var(--ink-mute);font-size:.86rem}
-  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-
-  .reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
-  .reveal.in{opacity:1;transform:none}
-
-  /* ---------- responsive ---------- */
-  @media (max-width:900px){
-    nav.main{display:none;position:absolute;top:72px;right:20px;flex-direction:column;gap:4px;background:rgba(18,28,51,.97);border:1px solid var(--line);border-radius:14px;padding:12px 8px;min-width:190px}
-    nav.main.open{display:flex}
-    nav.main a{padding:8px 14px}
-    .menu-btn{display:block}
-    .hero .wrap{grid-template-columns:1fr;padding-top:120px;padding-bottom:200px;gap:10px}
-    .trail{height:420px}
-    .quote{display:none}
-    .areas{grid-template-columns:1fr 1fr}
-    .projects,.split,.about{grid-template-columns:1fr;gap:40px}
-    .sec-head{flex-direction:column;gap:10px}
-    section{padding:84px 0}
-  }
-  @media (max-width:560px){
-    .areas{grid-template-columns:1fr}
-    .trail{height:380px}
-    .trail .node-label{font-size:17px}
-  }
-  @media (prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto}
-    .reveal{opacity:1;transform:none;transition:none}
-  }
-
-  /* =====================================================
-     EFEITOS DE VIDRO + TEMAS  (data-tema no <html>)
-     vidro   = noite com vidro fosco (padrão)
-     vitral  = luz colorida de vitral atrás do vidro
-     cristal = versão clara, vidro leitoso
-     ===================================================== */
-  :root{
-    --glass-bg:rgba(20,30,55,.38); --glass-bg-strong:rgba(16,24,44,.62);
-    --glass-border:rgba(243,234,216,.16); --glass-hi:rgba(255,255,255,.10);
-    --glass-blur:18px; --glass-shadow:0 20px 50px -20px rgba(0,0,0,.6);
-    --node-fill:#0b1222; --fade-rgb:11,18,34; --quote-shadow:0 2px 18px rgba(0,0,0,.8);
-    --orb1:rgba(61,92,160,.35); --orb2:rgba(232,176,74,.18); --orb3:rgba(58,166,160,.16); --orb4:rgba(196,87,46,.12);
-    --hero-bg:
-      radial-gradient(1200px 500px at 70% 110%, rgba(232,176,74,.16), transparent 60%),
-      radial-gradient(900px 600px at 15% 0%, rgba(61,92,160,.25), transparent 65%),
-      linear-gradient(180deg,rgba(7,12,24,.92) 0%, rgba(11,18,34,.55) 50%, rgba(18,28,51,.2) 100%);
-  }
-  html[data-tema="vitral"]{
-    --night:#080b16; --night-2:#0d1222; --night-3:#151c33;
-    --glass-bg:rgba(12,16,32,.30); --glass-bg-strong:rgba(10,14,28,.55);
-    --glass-border:rgba(255,236,200,.20); --glass-hi:rgba(255,255,255,.14);
-    --glass-blur:22px; --fade-rgb:8,11,22; --node-fill:#080b16;
-    --orb1:rgba(47,95,167,.75); --orb2:rgba(232,150,40,.60); --orb3:rgba(58,166,160,.55); --orb4:rgba(196,60,46,.60);
-    --hero-bg:linear-gradient(180deg,rgba(5,7,15,.75) 0%, rgba(8,11,22,.35) 60%, transparent 100%);
-  }
-  html[data-tema="cristal"]{
-    --night:#f3ece0; --night-2:#ebe2d1; --night-3:#ded1b9;
-    --ink:#2a2219; --ink-soft:#5b5043; --ink-mute:#8a7e6d;
-    --gold:#a8701a; --gold-soft:#8f5c10;
-    --line:rgba(42,34,25,.12);
-    --glass-bg:rgba(255,255,255,.42); --glass-bg-strong:rgba(255,252,246,.70);
-    --glass-border:rgba(255,255,255,.75); --glass-hi:rgba(255,255,255,.6);
-    --glass-blur:20px; --glass-shadow:0 20px 50px -24px rgba(90,60,20,.35);
-    --node-fill:#fffaf0; --fade-rgb:243,236,224; --quote-shadow:none;
-    --orb1:rgba(120,160,220,.45); --orb2:rgba(240,190,100,.50); --orb3:rgba(120,190,170,.40); --orb4:rgba(230,140,110,.35);
-    --hero-bg:
-      radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.9), transparent 60%),
-      linear-gradient(180deg,rgba(248,243,234,.85) 0%, rgba(243,236,224,.4) 60%, transparent 100%);
-  }
-  html[data-tema="cristal"] #stars{display:none}
-  body{transition:background .4s,color .4s}
-  .hero{background:var(--hero-bg)}
-  .quote{text-shadow:var(--quote-shadow)}
-
-  /* receita do vidro */
+  /* ---------- vidro ---------- */
   .glass{
     background:linear-gradient(135deg,var(--glass-hi),transparent 40%),var(--glass-bg);
-    -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(160%);
-    backdrop-filter:blur(var(--glass-blur)) saturate(160%);
+    -webkit-backdrop-filter:blur(18px) saturate(160%);
+    backdrop-filter:blur(18px) saturate(160%);
     border:1px solid var(--glass-border);
     box-shadow:var(--glass-shadow), inset 0 1px 0 var(--glass-hi);
   }
 
-  /* luzes atrás do vidro (fixas, cobrem a página toda) */
+  /* ---------- luz de vitral (fundo fixo) ---------- */
   .orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-  .orbs i{position:absolute;border-radius:50%;filter:blur(70px);will-change:transform}
-  .orbs i:nth-child(1){width:46vw;height:46vw;left:-10vw;top:10vh;background:var(--orb1);animation:drift 26s ease-in-out infinite}
-  .orbs i:nth-child(2){width:38vw;height:38vw;right:-8vw;top:30vh;background:var(--orb2);animation:drift 32s ease-in-out infinite reverse}
-  .orbs i:nth-child(3){width:30vw;height:30vw;left:30vw;bottom:-10vh;background:var(--orb3);animation:drift 38s ease-in-out infinite}
-  .orbs i:nth-child(4){width:24vw;height:24vw;right:22vw;top:-6vh;background:var(--orb4);animation:drift 30s ease-in-out infinite reverse}
+  .orbs i{position:absolute;border-radius:50%;filter:blur(80px);will-change:transform}
+  .orbs i:nth-child(1){width:46vw;height:46vw;left:-10vw;top:10vh;background:rgba(70,130,210,.30);animation:drift 26s ease-in-out infinite}
+  .orbs i:nth-child(2){width:38vw;height:38vw;right:-8vw;top:30vh;background:rgba(240,150,60,.32);animation:drift 32s ease-in-out infinite reverse}
+  .orbs i:nth-child(3){width:30vw;height:30vw;left:30vw;bottom:-10vh;background:rgba(80,175,140,.26);animation:drift 38s ease-in-out infinite}
+  .orbs i:nth-child(4){width:24vw;height:24vw;right:22vw;top:-6vh;background:rgba(215,80,60,.24);animation:drift 30s ease-in-out infinite reverse}
   @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(6vw,-4vh) scale(1.08)}66%{transform:translate(-4vw,5vh) scale(.95)}}
   main,footer{position:relative;z-index:1}
-  section:not(.hero),#projetos,#sobre{background:transparent}
-  body{background:var(--night)}
 
-  /* vitral: raios de luz colorida na abertura */
-  .rays{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity .5s}
-  html[data-tema="vitral"] .rays{opacity:1}
-  .rays span{position:absolute;top:-10%;width:22vw;height:120%;transform-origin:top center;filter:blur(30px);mix-blend-mode:screen;opacity:.55}
-  .rays span:nth-child(1){left:8%;transform:rotate(18deg);background:linear-gradient(180deg,rgba(47,95,167,.9),transparent 75%)}
-  .rays span:nth-child(2){left:30%;transform:rotate(10deg);background:linear-gradient(180deg,rgba(232,150,40,.8),transparent 70%)}
-  .rays span:nth-child(3){left:55%;transform:rotate(-6deg);background:linear-gradient(180deg,rgba(196,60,46,.75),transparent 70%)}
-  .rays span:nth-child(4){left:76%;transform:rotate(-16deg);background:linear-gradient(180deg,rgba(58,166,160,.8),transparent 72%)}
-
-  /* cabeçalho de vidro ao rolar */
-  header.top{position:fixed;transition:background .3s,backdrop-filter .3s,border-color .3s;border-bottom:1px solid transparent}
+  /* ---------- cabeçalho ---------- */
+  header.top{position:fixed;inset:0 0 auto 0;z-index:10;border-bottom:1px solid transparent;transition:background .3s,border-color .3s}
   header.top.scrolled{background:var(--glass-bg-strong);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);border-bottom-color:var(--glass-border)}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:84px;transition:height .3s}
   header.top.scrolled .wrap{height:66px}
-  header.top .wrap{transition:height .3s}
-  nav.main{padding:6px 8px;border-radius:999px}
-  nav.main a{padding:6px 12px;border-radius:999px;transition:color .2s,background .2s}
-  nav.main a:hover{background:var(--glass-hi)}
+  .brand{font-family:var(--serif);font-size:1.45rem;text-decoration:none;letter-spacing:-.01em}
+  .brand span{color:var(--gold)}
+  nav.main{display:flex;gap:4px;padding:6px 8px;border-radius:999px}
+  nav.main a{text-decoration:none;font-size:.93rem;color:var(--ink-soft);padding:6px 14px;border-radius:999px;transition:color .2s,background .2s}
+  nav.main a:hover{color:var(--ink);background:var(--glass-hi)}
+  .menu-btn{display:none;background:none;border:0;color:var(--ink);cursor:pointer;padding:8px}
 
-  /* painel de vidro atrás da trilha */
-  .trail.glass{border-radius:28px;padding:18px}
-
-  /* dock de atalhos sobre o mosaico */
-  .dock{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);z-index:4;display:flex;gap:6px;padding:10px;border-radius:24px}
-  .dock a{display:flex;flex-direction:column;align-items:center;gap:7px;padding:12px 18px;border-radius:16px;text-decoration:none;font-size:.8rem;color:var(--ink);min-width:104px;transition:background .2s,transform .2s}
-  .dock a:hover{background:var(--glass-hi);transform:translateY(-3px)}
-  .dock svg{width:22px;height:22px;stroke:var(--gold-soft)}
-  .quote{right:28px;bottom:24px;font-size:1rem}
-  .node-dot{stroke:var(--gold-soft)}
-  html[data-tema="cristal"] #trailGrad stop{stop-color:#b5791d}
-  html[data-tema="cristal"] .trail .node-label{font-weight:500}
-  html[data-tema="vitral"] .orbs i{filter:blur(90px)}
-
-  /* cartões de vidro */
-  .areas{gap:18px;background:transparent;border:0}
-  .area{border-radius:20px;background:transparent}
-  .area:hover{background:var(--glass-hi)}
-  .proj{background:transparent;border-radius:22px}
-  .soon{padding:30px;border-radius:22px;border-top:1px solid var(--glass-border)}
-  .about > div{padding:34px;border-radius:24px}
-
-
-  /* ---------- D · CATEDRAL (Sagrada Família) ---------- */
-  html[data-tema="catedral"]{
-    --night:#0c0a10; --night-2:#120f18; --night-3:#1b1724;
-    --ink:#f4ecdc; --ink-soft:#d3c8b4; --ink-mute:#958a78;
-    --gold:#eab65a; --gold-soft:#f7d690;
-    --glass-bg:rgba(16,12,20,.30); --glass-bg-strong:rgba(14,11,18,.58);
-    --glass-border:rgba(255,236,205,.20); --glass-hi:rgba(255,255,255,.12);
-    --glass-blur:16px; --fade-rgb:12,10,16; --node-fill:#0c0a10;
-    --orb1:rgba(40,110,190,.55); --orb2:rgba(230,110,40,.50); --orb3:rgba(60,170,120,.40); --orb4:rgba(200,45,45,.45);
-    --hero-bg:transparent;
-  }
-  #nave{position:absolute;inset:0;width:100%;height:100%;z-index:1;opacity:0;transition:opacity .6s}
-  html[data-tema="catedral"] #nave{opacity:1}
-  html[data-tema="catedral"] #stars,
-  html[data-tema="catedral"] #mosaic{display:none}
-  html[data-tema="catedral"] .hero .wrap > div:first-child{text-shadow:0 2px 30px rgba(0,0,0,.65)}
-
-
-  /* ---------- E · PERSPECTIVA (foto da nave + vidro) ---------- */
-  html[data-tema="perspectiva"]{
-    --night:#0d0b10; --night-2:#14111a; --night-3:#1d1925;
-    --ink:#f6efe2; --ink-soft:#ddd2bf; --ink-mute:#9a8f7d;
-    --gold:#eab65a; --gold-soft:#f7d690;
-    --glass-bg:rgba(30,24,22,.28); --glass-bg-strong:rgba(18,14,16,.55);
-    --glass-border:rgba(255,240,215,.22); --glass-hi:rgba(255,255,255,.14);
-    --glass-blur:14px; --fade-rgb:13,11,16; --node-fill:#0d0b10;
-    --orb1:rgba(40,110,190,.45); --orb2:rgba(230,130,50,.45); --orb3:rgba(60,170,120,.30); --orb4:rgba(200,60,45,.35);
-  }
-  .hero-p{display:none;position:relative;min-height:100svh;overflow:hidden;padding:0}
-  html[data-tema="perspectiva"] .hero{display:none}
-  html[data-tema="perspectiva"] .hero-p{display:block}
-  .hp-photo,#nave2{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
-  #nave2{display:none}
-  .hero-p.no-photo .hp-photo{display:none}
-  .hero-p.no-photo{background:radial-gradient(900px 600px at 70% 30%,rgba(234,182,90,.18),transparent 60%),radial-gradient(700px 500px at 20% 80%,rgba(40,90,160,.18),transparent 60%),#0d0b10}
-  .hp-shade{position:absolute;inset:0;
-    background:
-      linear-gradient(90deg,rgba(10,8,12,.82) 0%,rgba(10,8,12,.5) 38%,rgba(10,8,12,.12) 62%,rgba(10,8,12,.12) 100%),
-      linear-gradient(180deg,rgba(10,8,12,.45) 0%,rgba(10,8,12,0) 22%,rgba(10,8,12,0) 70%,rgba(13,11,16,.9) 100%);}
-  .hero-p .wrap{position:relative;z-index:2;min-height:100svh;display:grid;grid-template-columns:1fr auto;align-items:center;gap:40px;padding-top:90px;padding-bottom:210px}
-  .hero-p h1{font-size:clamp(3rem,7vw,6rem);line-height:.98;text-shadow:0 2px 30px rgba(0,0,0,.5)}
-  .hero-p .lead{max-width:34ch;color:var(--ink);opacity:.92;text-shadow:0 1px 14px rgba(0,0,0,.6)}
-  .hero-p .btn{margin-top:30px}
-  .pillars{list-style:none;padding:12px 8px;border-radius:22px;min-width:230px}
-  .pillars li{padding:16px 22px;font-size:1.02rem;line-height:1.3;border-bottom:1px solid var(--glass-border)}
-  .pillars li:last-child{border-bottom:0}
-  .pillars li span{display:block;color:var(--ink-soft);font-size:.92rem}
-  .arch-dock{position:absolute;left:50%;bottom:0;transform:translateX(-50%);z-index:3;width:min(1100px,94vw);
-    display:flex;justify-content:space-around;padding:34px 30px 30px;border-bottom:0;
-    border-radius:50% 50% 0 0 / 90px 90px 0 0}
-  .arch-dock a{display:flex;flex-direction:column;align-items:center;gap:10px;text-decoration:none;text-align:center;font-size:.86rem;line-height:1.25;color:var(--ink);padding:10px 14px;border-radius:16px;transition:background .2s,transform .2s}
-  .arch-dock a:hover{background:var(--glass-hi);transform:translateY(-3px)}
-  .arch-dock svg{width:30px;height:30px;stroke:var(--ink);stroke-width:1.3;fill:none;stroke-linecap:round;stroke-linejoin:round}
-  html[data-tema="perspectiva"] body.picking .picker{bottom:auto;top:92px}
-  @media (max-width:900px){
-    .hp-shade{background:linear-gradient(180deg,rgba(10,8,12,.55),rgba(10,8,12,.45) 50%,rgba(13,11,16,.9))}
-    .hero-p .wrap{grid-template-columns:1fr;padding-top:120px;padding-bottom:150px}
-    .pillars{display:grid;grid-template-columns:1fr 1fr;min-width:0;padding:6px}
-    .pillars li{border-bottom:0;padding:12px 14px}
-    .arch-dock{padding:22px 6px 18px;border-radius:50% 50% 0 0 / 40px 40px 0 0}
-    .arch-dock a{font-size:.7rem;padding:6px 4px;gap:6px}
-    .arch-dock svg{width:24px;height:24px}
-  }
-
-
-  /* ---------- F · GAUDÍ (geometria regrada + luz de vitral sobre pedra) ---------- */
-  html[data-tema="gaudi"]{
-    --night:#f2ece1; --night-2:#ebe3d5; --night-3:#ded3c0;
-    --ink:#2b241c; --ink-soft:#5c5245; --ink-mute:#8b806f;
-    --gold:#a86f1c; --gold-soft:#8c5a12;
-    --line:rgba(43,36,28,.12);
-    --glass-bg:rgba(255,252,246,.42); --glass-bg-strong:rgba(250,246,238,.72);
-    --glass-border:rgba(255,255,255,.75); --glass-hi:rgba(255,255,255,.55);
-    --glass-blur:18px; --glass-shadow:0 24px 50px -28px rgba(80,55,20,.35);
-    --node-fill:#fffaf0; --fade-rgb:242,236,225; --quote-shadow:none;
-    --orb1:rgba(70,130,210,.30); --orb2:rgba(240,150,60,.32); --orb3:rgba(80,175,140,.26); --orb4:rgba(215,80,60,.24);
-  }
-  html[data-tema="gaudi"] #trailGrad stop{stop-color:#b5791d}
-  .hero-g{display:none;position:relative;min-height:100svh;overflow:hidden;padding:0}
-  html[data-tema="gaudi"] .hero,
-  html[data-tema="gaudi"] .hero-p{display:none}
-  html[data-tema="gaudi"] .hero-g{display:block}
+  /* ---------- abertura ---------- */
+  .hero{position:relative;min-height:100svh;overflow:hidden}
   .wash{position:absolute;inset:0;pointer-events:none}
   .wash i{position:absolute;border-radius:50%;filter:blur(80px)}
   .wash i:nth-child(1){width:34vw;height:60vh;left:-6vw;top:-8vh;background:rgba(60,120,210,.30)}
@@ -341,38 +75,91 @@
   .wash i:nth-child(4){width:22vw;height:36vh;right:20vw;top:58vh;background:rgba(215,70,55,.20)}
   .wash i:nth-child(5){width:30vw;height:30vh;left:40vw;top:-12vh;background:rgba(255,215,130,.45)}
   #hyper{position:absolute;inset:0;width:100%;height:100%}
-  .hero-g .wrap{position:relative;z-index:2;min-height:100svh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;padding-top:90px;padding-bottom:200px}
-  .hero-g h1{font-size:clamp(3rem,6.6vw,5.8rem);line-height:.98}
-  .hero-g h1 em{color:var(--gold)}
-  .hero-g .lead{max-width:36ch}
-  .hero-g .note{align-self:end;justify-self:end;max-width:300px;padding:18px 22px;border-radius:18px;font-size:.88rem;color:var(--ink-soft);line-height:1.5}
-  .hero-g .note b{display:block;font-family:var(--serif);font-weight:400;font-style:italic;font-size:1.15rem;color:var(--ink);margin-bottom:4px}
-  html[data-tema="gaudi"] .arch-dock svg{stroke:var(--ink)}
-  html[data-tema="gaudi"] body.picking .picker{bottom:auto;top:92px}
-  @media (max-width:900px){
-    .hero-g .wrap{grid-template-columns:1fr;padding-top:120px;padding-bottom:160px}
-    .hero-g .note{justify-self:start;margin-top:46vh}
-  }
+  .hero .wrap{position:relative;z-index:2;min-height:100svh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;padding-top:90px;padding-bottom:200px}
+  .eyebrow{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(3rem,6.6vw,5.8rem);line-height:.98;letter-spacing:-.025em}
+  h1 em{font-style:italic;color:var(--gold)}
+  .lead{margin-top:24px;font-size:1.15rem;color:var(--ink-soft);max-width:36ch}
+  .btn{display:inline-flex;align-items:center;gap:10px;margin-top:36px;padding:13px 24px;border-radius:999px;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:600;font-size:.95rem;transition:transform .2s,background .2s}
+  .btn:hover{background:#4a3d2e;transform:translateY(-2px)}
+  .btn svg{transition:transform .2s}.btn:hover svg{transform:translateX(3px)}
+  .note{align-self:end;justify-self:end;max-width:300px;padding:18px 22px;border-radius:18px;font-size:.88rem;color:var(--ink-soft);line-height:1.5}
+  .note b{display:block;font-family:var(--serif);font-weight:400;font-style:italic;font-size:1.15rem;color:var(--ink);margin-bottom:4px}
+  .arch-dock{position:absolute;left:50%;bottom:0;transform:translateX(-50%);z-index:3;width:min(1100px,94vw);display:flex;justify-content:space-around;padding:34px 30px 30px;border-bottom:0;border-radius:50% 50% 0 0 / 90px 90px 0 0}
+  .arch-dock a{display:flex;flex-direction:column;align-items:center;gap:10px;text-decoration:none;text-align:center;font-size:.86rem;line-height:1.25;padding:10px 14px;border-radius:16px;transition:background .2s,transform .2s}
+  .arch-dock a:hover{background:var(--glass-hi);transform:translateY(-3px)}
+  .arch-dock svg{width:30px;height:30px;stroke:var(--ink);stroke-width:1.3;fill:none;stroke-linecap:round;stroke-linejoin:round}
 
-  /* seletor de opções (temporário) */
-  .picker{max-width:94vw;overflow-x:auto;scrollbar-width:none;position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:4px;padding:6px;border-radius:999px;font-size:.82rem}
-  .picker b{font-weight:500;color:var(--ink-mute);padding:0 10px 0 12px}
-  .picker button{white-space:nowrap;font:inherit;color:var(--ink-soft);background:none;border:0;padding:8px 14px;border-radius:999px;cursor:pointer}
-  .picker button[aria-pressed="true"]{background:var(--ink);color:var(--night)}
-  .hero .dock{transition:opacity .4s}
-  body.picking .dock{bottom:84px}
+  /* ---------- seções ---------- */
+  section{padding:120px 0}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:30px;margin-bottom:56px;border-bottom:1px solid var(--line);padding-bottom:22px}
+  .sec-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,3.6vw,2.9rem);letter-spacing:-.02em}
+  .sec-head p{color:var(--ink-mute);max-width:42ch;font-size:.98rem}
+  .num{font-family:var(--serif);color:var(--gold);font-size:.95rem;margin-right:14px;font-style:italic}
+
+  .areas{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .area{padding:30px 28px 34px;border-radius:20px;transition:transform .25s}
+  .area:hover{transform:translateY(-3px)}
+  .area .chip{width:44px;height:44px;margin-bottom:18px}
+  .area h3{font-family:var(--serif);font-weight:400;font-size:1.4rem;margin-bottom:8px}
+  .area p{color:var(--ink-soft);font-size:.95rem}
+
+  .projects{display:grid;grid-template-columns:1.4fr 1fr;gap:28px}
+  .proj{border-radius:22px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;transition:transform .25s}
+  a.proj:hover{transform:translateY(-4px)}
+  .proj .art{aspect-ratio:16/9;background:#fbf7ef}
+  .proj .art svg{width:100%;height:100%}
+  .proj .body{padding:26px 28px 30px}
+  .proj h3{font-family:var(--serif);font-weight:400;font-size:1.6rem;margin:8px 0}
+  .proj p{color:var(--ink-soft);font-size:.96rem}
+  .tag{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--ink-mute)}
+  .tag.live{border-color:rgba(168,111,28,.5);color:var(--gold)}
+  .proj .go{margin-top:18px;display:inline-flex;gap:8px;align-items:center;color:var(--gold);font-weight:500;font-size:.92rem}
+  .stack{display:grid;gap:28px}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .soon{padding:30px;border-radius:22px}
+  .soon h3{font-family:var(--serif);font-weight:300;font-size:2rem;margin-bottom:12px}
+  .soon p{color:var(--ink-soft)}
+  .soon ul{list-style:none;margin-top:22px}
+  .soon li{padding:13px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;color:var(--ink-soft);font-size:.95rem}
+  .soon li span{color:var(--ink-mute);font-size:.82rem}
+
+  .about{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px;align-items:start}
+  .about blockquote{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.6rem,2.6vw,2.2rem);line-height:1.25;color:var(--gold)}
+  .about > div{padding:34px;border-radius:24px}
+  .about p{color:var(--ink-soft);margin-bottom:18px;font-size:1.05rem}
+  .about p:last-child{margin-bottom:0}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;color:var(--ink-mute);font-size:.86rem}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
 
   @media (max-width:900px){
-    nav.main{border-radius:14px}
-    nav.main.glass{background:var(--glass-bg-strong)}
-    .dock{display:none}
-    .trail.glass{padding:10px}
+    nav.main{display:none;position:absolute;top:72px;right:20px;flex-direction:column;border-radius:14px;padding:10px 6px;min-width:190px;background:var(--glass-bg-strong)}
+    nav.main.open{display:flex}
+    .menu-btn{display:block}
+    .hero .wrap{grid-template-columns:1fr;padding-top:120px;padding-bottom:160px}
+    .note{justify-self:start;margin-top:46vh}
+    .arch-dock{padding:22px 6px 18px;border-radius:50% 50% 0 0 / 40px 40px 0 0}
+    .arch-dock a{font-size:.7rem;padding:6px 4px;gap:6px}
+    .arch-dock svg{width:24px;height:24px}
+    .areas{grid-template-columns:1fr 1fr}
+    .projects,.split,.about{grid-template-columns:1fr;gap:28px}
+    .sec-head{flex-direction:column;gap:10px}
+    section{padding:84px 0}
   }
-  @media (max-width:560px){ .picker b{display:none} .picker button{padding:8px 10px;font-size:.76rem} }
-  @media (prefers-reduced-motion:reduce){ .orbs i{animation:none} }
+  @media (max-width:560px){ .areas{grid-template-columns:1fr} }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .orbs i{animation:none}
+  }
 </style>
 </head>
-<body class="picking">
+<body>
 <div class="orbs" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 
 <header class="top">
@@ -392,8 +179,8 @@
 </header>
 
 <main>
-<!-- =============== HERO F · GAUDÍ =============== -->
-<section class="hero-g">
+<!-- =============== ABERTURA =============== -->
+<section class="hero" style="padding:0">
   <div class="wash" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
   <canvas id="hyper" aria-hidden="true"></canvas>
   <div class="wrap">
@@ -405,92 +192,14 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
-    <p class="note glass"><b>Feito só de retas</b>O hiperboloide ao lado é uma superfície curva construída apenas com segmentos de reta. Gaudí usou essas formas nas abóbadas e janelas da Sagrada Família.</p>
+    <p class="note glass"><b>Feito só de retas</b>Este hiperboloide é uma superfície curva construída apenas com segmentos de reta. Gaudí usou essas formas nas abóbadas e janelas da Sagrada Família.</p>
   </div>
   <nav class="arch-dock glass" aria-label="Atalhos">
     <a href="#projetos"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="3.2"/><circle cx="7" cy="15" r="3.2"/><circle cx="17" cy="15" r="3.2"/></svg>Projetos<br>interativos</a>
     <a href="#materiais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5c3-1 6-1 9 1 3-2 6-2 9-1v14c-3-1-6-1-9 1-3-2-6-2-9-1z"/><path d="M12 6v14"/></svg>Materiais<br>didáticos</a>
     <a href="#materiais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/></svg>Textos<br>e reflexões</a>
     <a href="/triangulo-mestre/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l7-7M14 4l6 6-3 3-6-6z"/><path d="M9 15l-3-3 2-2 3 3"/></svg>Ferramentas</a>
-    <a href="#sobre"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Sobre mim</a>
-  </nav>
-</section>
-
-<!-- =============== HERO E · PERSPECTIVA =============== -->
-<section class="hero-p" id="heroP">
-  <!-- Coloque a foto em img/catedral.jpg (paisagem, 1920px ou mais). Sem foto, aparece a nave desenhada. -->
-  <img class="hp-photo" src="img/catedral.jpg" alt="Interior da Sagrada Família, Barcelona: colunas em forma de árvore e vitrais coloridos"
-       onerror="this.closest('.hero-p').classList.add('no-photo');dispatchEvent(new Event('resize'))">
-  <canvas id="nave2" aria-hidden="true"></canvas>
-  <div class="hp-shade"></div>
-  <div class="wrap">
-    <div>
-      <h1>Matemática<br>em<br>perspectiva</h1>
-      <p class="lead">Estruturas, padrões e ideias que conectam ciência, arte e vida.</p>
-      <a class="btn" href="#trilhas">Explorar
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
-    <ul class="pillars glass">
-      <li>Geometria<span>nas formas</span></li>
-      <li>Ideias<span>em movimento</span></li>
-      <li>Conhecimento<span>compartilhado</span></li>
-      <li>Curiosidade<span>sempre</span></li>
-    </ul>
-  </div>
-  <nav class="arch-dock glass" aria-label="Atalhos">
-    <a href="#projetos"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="3.2"/><circle cx="7" cy="15" r="3.2"/><circle cx="17" cy="15" r="3.2"/><circle cx="12" cy="12" r="1"/></svg>Projetos<br>interativos</a>
-    <a href="#materiais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5c3-1 6-1 9 1 3-2 6-2 9-1v14c-3-1-6-1-9 1-3-2-6-2-9-1z"/><path d="M12 6v14"/></svg>Materiais<br>didáticos</a>
-    <a href="#materiais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/></svg>Textos<br>e reflexões</a>
-    <a href="/triangulo-mestre/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l7-7M14 4l6 6-3 3-6-6z"/><path d="M9 15l-3-3 2-2 3 3"/></svg>Ferramentas</a>
-    <a href="#sobre"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Sobre mim</a>
-  </nav>
-</section>
-
-<!-- =============== HERO =============== -->
-<section class="hero" style="padding:0">
-  <canvas id="stars" aria-hidden="true"></canvas>
-  <canvas id="nave" aria-hidden="true"></canvas>
-  <div class="rays" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-  <div class="wrap">
-    <div>
-      <p class="eyebrow">Matemática · Ciência · Arte · Vida</p>
-      <h1>Trilhas do<br><em>Conhecimento</em></h1>
-      <p class="lead">Caminhos que se conectam — projetos, materiais e ideias de livre acesso para aprender matemática olhando o mundo.</p>
-      <a class="btn" href="#trilhas">Começar a explorar
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
-
-    <div class="trail glass" aria-label="Mapa das trilhas">
-      <svg id="trailSvg" viewBox="0 0 420 620" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="4" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <linearGradient id="trailGrad" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0" stop-color="#e8b04a" stop-opacity=".15"/>
-            <stop offset=".4" stop-color="#e8b04a" stop-opacity=".9"/>
-            <stop offset="1" stop-color="#f6d48a"/>
-          </linearGradient>
-        </defs>
-        <path id="trailBase" d="M40 610 C 150 560, 30 470, 150 430 S 300 380, 190 300 S 70 200, 200 150 S 330 90, 250 20"
-              fill="none" stroke="rgba(243,234,216,.08)" stroke-width="10" stroke-linecap="round"/>
-        <path id="trailPath" d="M40 610 C 150 560, 30 470, 150 430 S 300 380, 190 300 S 70 200, 200 150 S 330 90, 250 20"
-              fill="none" stroke="url(#trailGrad)" stroke-width="2.2" stroke-linecap="round" filter="url(#glow)"/>
-        <g id="nodes"></g>
-      </svg>
-      <p class="quote">“Cada ideia é um caminho.<br>E cada caminho leva a outros.”</p>
-    </div>
-  </div>
-  <canvas id="mosaic" aria-hidden="true"></canvas>
-  <nav class="dock glass" aria-label="Atalhos">
-    <a href="#projetos"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Projetos interativos</a>
-    <a href="#materiais"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h6"/></svg>Materiais didáticos</a>
-    <a href="#materiais"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/></svg>Textos e reflexões</a>
-    <a href="#trilhas"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c4 0 3-8 8-8s4 6 8 6"/><circle cx="4" cy="18" r="1.5"/><circle cx="20" cy="16" r="1.5"/></svg>Trilhas</a>
-    <a href="#sobre"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Sobre mim</a>
+    <a href="#sobre"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>Sobre</a>
   </nav>
 </section>
 
@@ -516,21 +225,19 @@
       <a class="proj glass" href="/triangulo-mestre/">
         <div class="art">
           <svg viewBox="0 0 640 360" aria-hidden="true">
-            <rect width="640" height="360" fill="#16223d"/>
-            <g stroke="rgba(243,234,216,.06)">
+            <g stroke="rgba(43,36,28,.07)">
               <path d="M0 40H640M0 80H640M0 120H640M0 160H640M0 200H640M0 240H640M0 280H640M0 320H640"/>
               <path d="M40 0V360M80 0V360M120 0V360M160 0V360M200 0V360M240 0V360M280 0V360M320 0V360M360 0V360M400 0V360M440 0V360M480 0V360M520 0V360M560 0V360M600 0V360"/>
             </g>
-            <polygon points="140,290 500,290 252,98" fill="rgba(232,176,74,.08)" stroke="#f3ead8" stroke-width="2"/>
-            <line x1="252" y1="98" x2="252" y2="290" stroke="#e8b04a" stroke-width="2" stroke-dasharray="6 6"/>
-            <path d="M252 272h18v18" fill="none" stroke="#e8b04a" stroke-width="1.6"/>
-            <path d="M238 112 a20 20 0 0 0 28 6" fill="none" stroke="#f6d48a" stroke-width="1.6"/>
-            <g font-family="Fraunces, serif" font-style="italic" fill="#f3ead8" font-size="22">
+            <polygon points="140,290 500,290 252,98" fill="rgba(168,111,28,.08)" stroke="#2b241c" stroke-width="2"/>
+            <line x1="252" y1="98" x2="252" y2="290" stroke="#a86f1c" stroke-width="2" stroke-dasharray="6 6"/>
+            <path d="M252 272h18v18" fill="none" stroke="#a86f1c" stroke-width="1.6"/>
+            <g font-family="Fraunces, serif" font-style="italic" fill="#2b241c" font-size="22">
               <text x="190" y="190">b</text><text x="380" y="190">c</text><text x="315" y="318">a</text>
-              <text x="262" y="200" fill="#e8b04a">h</text>
-              <text x="186" y="314" fill="#c9c0ad" font-size="18">m</text><text x="370" y="314" fill="#c9c0ad" font-size="18">n</text>
+              <text x="262" y="200" fill="#a86f1c">h</text>
+              <text x="186" y="314" fill="#5c5245" font-size="18">m</text><text x="370" y="314" fill="#5c5245" font-size="18">n</text>
             </g>
-            <text x="40" y="52" font-family="Instrument Sans, sans-serif" font-size="15" fill="#8d8778" letter-spacing="2">h² = m · n</text>
+            <text x="40" y="52" font-family="Instrument Sans, sans-serif" font-size="15" fill="#8b806f" letter-spacing="2">h² = m · n</text>
           </svg>
         </div>
         <div class="body">
@@ -542,28 +249,23 @@
           </span>
         </div>
       </a>
-
       <div class="stack">
-        <div class="proj glass">
-          <div class="body">
-            <span class="tag">Em construção</span>
-            <h3>Oficina de Geometria</h3>
-            <p>Trigonometria, semelhança, Tales e Pitágoras a partir de situações reais — com uma parte digital feita para surpreender.</p>
-          </div>
-        </div>
-        <div class="proj glass">
-          <div class="body">
-            <span class="tag">Em breve</span>
-            <h3>Mather</h3>
-            <p>Um jogo de plataforma em que o personagem sobe, desce, avança ou volta conforme você responde valores trigonométricos.</p>
-          </div>
-        </div>
+        <div class="proj glass"><div class="body">
+          <span class="tag">Em construção</span>
+          <h3>Oficina de Geometria</h3>
+          <p>Trigonometria, semelhança, Tales e Pitágoras a partir de situações reais — com uma parte digital feita para surpreender.</p>
+        </div></div>
+        <div class="proj glass"><div class="body">
+          <span class="tag">Em breve</span>
+          <h3>Mather</h3>
+          <p>Um jogo de plataforma em que o personagem sobe, desce, avança ou volta conforme você responde valores trigonométricos.</p>
+        </div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- =============== MATERIAIS / ESCRITOS =============== -->
+<!-- =============== MATERIAIS & ESCRITOS =============== -->
 <section id="materiais">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -582,7 +284,7 @@
       </div>
       <div class="soon glass">
         <h3>Escritos</h3>
-        <p>Textos e reflexões sobre ensinar e aprender matemática na escola pública.</p>
+        <p>Textos e reflexões sobre ensinar e aprender matemática.</p>
         <ul>
           <li>Notas de sala de aula <span>em breve</span></li>
           <li>Erros que ensinam <span>em breve</span></li>
@@ -602,12 +304,8 @@
     <div class="about reveal">
       <blockquote>“A curiosidade transforma o olhar.”</blockquote>
       <div class="glass">
-        <p>Sou Divonei, licenciando em Matemática e educador na rede pública. Este site é o lugar onde reúno o que construo para ensinar: ferramentas interativas, materiais e ideias.</p>
+        <p>Um espaço aberto de matemática: ferramentas interativas, materiais e ideias para quem ensina e para quem aprende.</p>
         <p>Tudo aqui é de livre acesso. Se algo for útil na sua sala de aula, use à vontade.</p>
-        <div class="links">
-          <a href="https://github.com/tux2022tux" target="_blank" rel="noopener">GitHub</a>
-          <a href="/triangulo-mestre/">Triângulo Mestre</a>
-        </div>
       </div>
     </div>
   </div>
@@ -616,330 +314,54 @@
 
 <footer>
   <div class="wrap">
-    <span>© <span id="year">2026</span> Divonei · conteúdo de livre acesso</span>
-    <span>Foto da abertura: <a href="https://commons.wikimedia.org/wiki/File:Sagrada_Familia_nave_roof_detail.jpg" target="_blank" rel="noopener">SBA73</a>, CC BY-SA 2.0, via Wikimedia Commons</span>
+    <span>© <span id="year">2026</span> divonei.com · conteúdo de livre acesso</span>
+    <span>Inspirado na geometria de Antoni Gaudí</span>
   </div>
 </footer>
-
-<div class="picker glass" role="group" aria-label="Escolher opção de visual">
-  <b>Opção</b>
-  <button data-t="vidro">A · Vidro</button>
-  <button data-t="vitral">B · Vitral</button>
-  <button data-t="cristal">C · Cristal</button>
-  <button data-t="catedral">D · Catedral</button>
-  <button data-t="perspectiva">E · Perspectiva</button>
-  <button data-t="gaudi">F · Gaudí</button>
-</div>
 
 <script>
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rng = s => () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
 
-  /* ---------- dados das trilhas ---------- */
+  /* ---------- trilhas ---------- */
   const AREAS = [
-    {t:'Matemática',          d:'Geometria, álgebra e números vistos a partir de situações reais.',       href:'#projetos', c:['#2f5fa7','#3aa6a0']},
-    {t:'Ciência e tecnologia',d:'Como a matemática roda por trás de telas, jogos e máquinas.',           href:'#projetos', c:['#3aa6a0','#5c8a3a']},
-    {t:'Projetos interativos',d:'Laboratórios no navegador para manipular, medir e descobrir.',          href:'#projetos', c:['#e8b04a','#c4572e']},
-    {t:'Educação e escola',   d:'Ideias e práticas para a sala de aula da escola pública.',               href:'#materiais',c:['#c4572e','#efe3c8']},
-    {t:'Livros e cultura',    d:'Leituras, referências e a matemática na arte e na arquitetura.',        href:'#materiais',c:['#efe3c8','#2f5fa7']},
-    {t:'Vida e sociedade',    d:'Números para entender o cotidiano e decidir melhor.',                    href:'#materiais',c:['#5c8a3a','#e8b04a']},
+    {t:'Matemática',          d:'Geometria, álgebra e números vistos a partir de situações reais.', c:['#3b78c8','#3aa58a']},
+    {t:'Ciência e tecnologia',d:'Como a matemática roda por trás de telas, jogos e máquinas.',     c:['#3aa58a','#6a9a3e']},
+    {t:'Projetos interativos',d:'Laboratórios no navegador para manipular, medir e descobrir.',    c:['#e0902f','#cf4a36']},
+    {t:'Educação e escola',   d:'Ideias e práticas para a sala de aula.',                          c:['#cf4a36','#c99a2e']},
+    {t:'Livros e cultura',    d:'Leituras, referências e a matemática na arte e na arquitetura.',  c:['#c99a2e','#3b78c8']},
+    {t:'Vida e sociedade',    d:'Números para entender o cotidiano e decidir melhor.',             c:['#6a9a3e','#e0902f']},
   ];
+  // ícone: pequena superfície regrada (retas entre duas curvas)
+  function chip(c, seed){
+    const r = rng(seed), tw = .6 + r()*1.2, n = 12;
+    let s = '<svg class="chip" viewBox="0 0 44 44" aria-hidden="true">';
+    for(let i = 0; i < n; i++){
+      const a = i/n*Math.PI*2, x1 = 22 + 16*Math.cos(a), x2 = 22 + 16*Math.cos(a + tw);
+      const col = c[i % 2];
+      s += `<line x1="${x1.toFixed(1)}" y1="6" x2="${x2.toFixed(1)}" y2="38" stroke="${col}" stroke-width="1.1" opacity="${(.45 + .5*Math.abs(Math.sin(a))).toFixed(2)}"/>`;
+    }
+    return s + '<line x1="6" y1="6" x2="38" y2="6" stroke="#2b241c" stroke-width="1" opacity=".5"/><line x1="6" y1="38" x2="38" y2="38" stroke="#2b241c" stroke-width="1" opacity=".5"/></svg>';
+  }
+  document.getElementById('areas').innerHTML = AREAS.map((a, i) =>
+    `<div class="area glass">${chip(a.c, 11 + i*37)}<h3>${a.t}</h3><p>${a.d}</p></div>`).join('');
 
-  /* ---------- menu mobile ---------- */
+  /* ---------- menu ---------- */
   const nav = document.getElementById('nav'), mb = document.getElementById('menuBtn');
   mb.addEventListener('click', () => { const o = nav.classList.toggle('open'); mb.setAttribute('aria-expanded', o); });
   nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); mb.setAttribute('aria-expanded', false); }));
   document.getElementById('year').textContent = new Date().getFullYear();
+  const hdr = document.querySelector('header.top');
+  const onScroll = () => hdr.classList.toggle('scrolled', scrollY > 40);
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
 
-  /* ---------- RNG com semente (desenho estável) ---------- */
-  const rng = s => () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
-
-  /* ---------- mini mosaico para os cartões ---------- */
-  function chip(colors, seed){
-    const r = rng(seed); let s = '<svg class="chip" viewBox="0 0 38 38" aria-hidden="true">';
-    const pts = [[0,0],[19+r()*6-3,0],[38,0],[0,19+r()*6-3],[19+r()*8-4,19+r()*8-4],[38,19+r()*6-3],[0,38],[19+r()*6-3,38],[38,38]];
-    const quads = [[0,1,4,3],[1,2,5,4],[3,4,7,6],[4,5,8,7]];
-    quads.forEach((q,i) => {
-      const p = q.map(k => pts[k]); const cx = p.reduce((a,b)=>a+b[0],0)/4, cy = p.reduce((a,b)=>a+b[1],0)/4;
-      const sh = p.map(([x,y]) => [cx+(x-cx)*.84, cy+(y-cy)*.84].map(v=>v.toFixed(1)).join(',')).join(' ');
-      s += `<polygon points="${sh}" fill="${colors[(i+(r()>.5?1:0))%2]}" opacity="${.75+r()*.25}"/>`;
-    });
-    return s + '</svg>';
-  }
-  document.getElementById('areas').innerHTML = AREAS.map((a,i) =>
-    `<div class="area glass">${chip(a.c, 7+i*31)}<h3>${a.t}</h3><p>${a.d}</p></div>`).join('');
-
-  /* ---------- nós da trilha ---------- */
-  const path = document.getElementById('trailPath'), g = document.getElementById('nodes');
-  const L = path.getTotalLength();
-  const NS = 'http://www.w3.org/2000/svg';
-  AREAS.forEach((a,i) => {
-    const p = path.getPointAtLength(L * (0.14 + i * 0.165));
-    const right = p.x < 210;
-    const link = document.createElementNS(NS,'a'); link.setAttribute('href', a.href);
-    link.innerHTML =
-      `<circle cx="${p.x}" cy="${p.y}" r="14" fill="rgba(232,176,74,.12)"/>
-       <circle class="node-dot" cx="${p.x}" cy="${p.y}" r="7" fill="var(--node-fill)" stroke="#f6d48a" stroke-width="2" filter="url(#glow)"/>
-       <text class="node-label" x="${p.x + (right ? 22 : -22)}" y="${p.y + 5}" text-anchor="${right ? 'start' : 'end'}">${a.t}</text>`;
-    g.appendChild(link);
-  });
-  if(!reduce){
-    path.style.strokeDasharray = L; path.style.strokeDashoffset = L;
-    path.getBoundingClientRect();
-    path.style.transition = 'stroke-dashoffset 2.6s cubic-bezier(.6,.05,.3,1)';
-    requestAnimationFrame(() => path.style.strokeDashoffset = 0);
-    [...g.children].forEach((n,i) => { n.style.opacity = 0; n.style.transition = 'opacity .6s'; setTimeout(() => n.style.opacity = 1, 400 + i*330); });
-  }
-
-  /* ---------- estrelas ---------- */
-  const sc = document.getElementById('stars'), sx = sc.getContext('2d');
-  let stars = [];
-  function sizeStars(){
-    const d = devicePixelRatio || 1; sc.width = sc.offsetWidth*d; sc.height = sc.offsetHeight*d; sx.setTransform(d,0,0,d,0,0);
-    const r = rng(42), n = Math.round(sc.offsetWidth*sc.offsetHeight/5200);
-    stars = Array.from({length:n}, () => ({x:r()*sc.offsetWidth, y:r()*sc.offsetHeight*.75, s:r()*1.2+.2, p:r()*6.28, v:.4+r()*1.2}));
-  }
-  function drawStars(t){
-    sx.clearRect(0,0,sc.offsetWidth,sc.offsetHeight);
-    for(const s of stars){
-      const a = (.35 + .35*Math.sin(s.p + t*.001*s.v)) * (1 - s.y/(sc.offsetHeight*.8));
-      sx.fillStyle = `rgba(243,234,216,${Math.max(a,0)})`; sx.beginPath(); sx.arc(s.x,s.y,s.s,0,6.28); sx.fill();
-    }
-    if(!reduce) requestAnimationFrame(drawStars);
-  }
-
-  /* ---------- mosaico trencadís (banco ondulado) ---------- */
-  const mc = document.getElementById('mosaic'), mx = mc.getContext('2d');
-  const PAL = ['#2f5fa7','#24508f','#3aa6a0','#2d8a85','#e8b04a','#d99a2b','#c4572e','#efe3c8','#e4d6b4','#5c8a3a','#f3ead8','#1f3d73'];
-  function drawMosaic(){
-    const d = devicePixelRatio || 1, W = mc.offsetWidth, H = mc.offsetHeight;
-    if(!W || !H) return;
-    mc.width = W*d; mc.height = H*d; mx.setTransform(d,0,0,d,0,0); mx.clearRect(0,0,W,H);
-    const r = rng(2024);
-    const mid = x => H*.58 + Math.sin(x/W*Math.PI*2.4 + .6)*H*.16 + Math.sin(x/W*Math.PI*6.1)*H*.04;
-    const thick = x => H*.30 + Math.sin(x/W*Math.PI*3.3)*H*.06;
-    const step = Math.max(14, Math.min(22, W/70)), rows = 9;
-    const cols = Math.ceil(W/step)+2;
-    // grade deformada que acompanha a curva
-    const grid = [];
-    for(let i=0;i<=cols;i++){
-      grid[i]=[];
-      for(let j=0;j<=rows;j++){
-        const x0 = (i-1)*step + (j%2 ? step*.5 : 0);
-        const jx = x0 + (r()-.5)*step*.7;
-        const t = j/rows, y = mid(jx) - thick(jx)/2 + t*thick(jx) + (j>0&&j<rows ? (r()-.5)*step*.5 : 0);
-        grid[i][j] = [jx, y];
-      }
-    }
-    // sombra/rejunte de fundo
-    mx.beginPath();
-    for(let x=0;x<=W;x+=8) mx.lineTo(x, mid(x)-thick(x)/2-3);
-    for(let x=W;x>=0;x-=8) mx.lineTo(x, mid(x)+thick(x)/2+3);
-    mx.closePath(); mx.fillStyle = '#1a1712'; mx.shadowColor = 'rgba(232,176,74,.35)'; mx.shadowBlur = 40; mx.fill(); mx.shadowBlur = 0;
-    // cacos
-    for(let i=0;i<cols;i++) for(let j=0;j<rows;j++){
-      const q = [grid[i][j], grid[i+1][j], grid[i+1][j+1], grid[i][j+1]];
-      const split = r() < .35; // alguns cacos viram dois triângulos
-      const polys = split ? [[q[0],q[1],q[2]],[q[0],q[2],q[3]]] : [q];
-      for(const p of polys){
-        const cx = p.reduce((a,b)=>a+b[0],0)/p.length, cy = p.reduce((a,b)=>a+b[1],0)/p.length;
-        const k = .80 + r()*.08;
-        mx.beginPath();
-        p.forEach(([x,y],n) => { const X = cx+(x-cx)*k, Y = cy+(y-cy)*k; n ? mx.lineTo(X,Y) : mx.moveTo(X,Y); });
-        mx.closePath();
-        // faixas: borda superior clara, miolo colorido
-        const col = j===0 ? (r()<.7?'#efe3c8':'#f3ead8') : PAL[Math.floor(r()*PAL.length)];
-        mx.fillStyle = col; mx.globalAlpha = .88 + r()*.12; mx.fill();
-        // brilho de cerâmica vindo da trilha
-        const lg = mx.createLinearGradient(cx-step/2, cy-step/2, cx+step/2, cy+step/2);
-        lg.addColorStop(0,'rgba(255,240,200,.35)'); lg.addColorStop(.5,'rgba(255,255,255,0)'); lg.addColorStop(1,'rgba(0,0,0,.25)');
-        mx.fillStyle = lg; mx.fill(); mx.globalAlpha = 1;
-      }
-    }
-    // escurece a parte inferior para assentar a seção seguinte
-    const fade = mx.createLinearGradient(0,H*.55,0,H);
-    const fr = getComputedStyle(document.documentElement).getPropertyValue('--fade-rgb').trim();
-    fade.addColorStop(0,`rgba(${fr},0)`); fade.addColorStop(1,`rgba(${fr},.95)`);
-    mx.fillStyle = fade; mx.fillRect(0,0,W,H);
-  }
-
-
-  /* ---------- nave da Sagrada Família (desenho procedural) ---------- */
-  const COOL = ['#1d4f9e','#2a7fc4','#2fa39a','#47b06a','#8cc864','#163a7a','#3b6fd0','#5fc0c8'];
-  const WARM = ['#c4302b','#e2672a','#f0a330','#f6c94e','#a8222a','#e8862b','#d94a2a','#ffb347'];
-  function lancet(ctx, x, y, w, h){           // janela gótica: retângulo + arco ogival
-    ctx.beginPath();
-    ctx.moveTo(x, y+h); ctx.lineTo(x, y+w*.9);
-    ctx.quadraticCurveTo(x, y, x+w/2, y-w*.25);
-    ctx.quadraticCurveTo(x+w, y, x+w, y+w*.9);
-    ctx.lineTo(x+w, y+h); ctx.closePath();
-  }
-  function glassFill(ctx, r, x, y, w, h, pal, cell){
-    ctx.save(); lancet(ctx, x, y, w, h); ctx.clip();
-    ctx.fillStyle = '#0a0608'; ctx.fillRect(x-2, y-w, w+4, h+w+4);
-    for(let gy = y - w*.3; gy < y+h; gy += cell){
-      for(let gx = x; gx < x+w; gx += cell){
-        const j = () => (r()-.5)*cell*.5;
-        ctx.beginPath();
-        ctx.moveTo(gx+j(), gy+j()); ctx.lineTo(gx+cell+j(), gy+j());
-        ctx.lineTo(gx+cell+j(), gy+cell+j()); ctx.lineTo(gx+j(), gy+cell+j()); ctx.closePath();
-        ctx.fillStyle = pal[Math.floor(r()*pal.length)];
-        ctx.globalAlpha = .55 + r()*.45; ctx.fill();
-      }
-    }
-    ctx.globalAlpha = 1;
-    // brilho central (luz do sol atravessando)
-    const g = ctx.createRadialGradient(x+w/2, y+h*.35, 0, x+w/2, y+h*.35, h*.7);
-    g.addColorStop(0,'rgba(255,245,220,.45)'); g.addColorStop(1,'rgba(255,245,220,0)');
-    ctx.globalCompositeOperation = 'screen'; ctx.fillStyle = g; ctx.fillRect(x, y-w, w, h+w);
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.restore();
-    ctx.strokeStyle = 'rgba(20,14,12,.9)'; ctx.lineWidth = Math.max(2, w*.06); lancet(ctx, x, y, w, h); ctx.stroke();
-  }
-  function rose(ctx, r, cx, cy, R){          // rosácea
-    ctx.save();
-    ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.283); ctx.clip();
-    ctx.fillStyle = '#0a0608'; ctx.fillRect(cx-R, cy-R, 2*R, 2*R);
-    const rings = 6;
-    for(let k = 0; k < rings; k++){
-      const r0 = R*k/rings, r1 = R*(k+1)/rings, n = 8 + k*6;
-      for(let i = 0; i < n; i++){
-        const a0 = i/n*6.283 + k*.2, a1 = (i+1)/n*6.283 + k*.2;
-        ctx.beginPath(); ctx.arc(cx, cy, r1-1, a0+.02, a1-.02); ctx.arc(cx, cy, r0+1, a1-.02, a0+.02, true); ctx.closePath();
-        const pal = (Math.cos((a0+a1)/2) < 0) ? COOL : WARM;
-        ctx.fillStyle = k === 0 ? '#ffe8a8' : pal[Math.floor(r()*pal.length)];
-        ctx.globalAlpha = .6 + r()*.4; ctx.fill();
-      }
-    }
-    ctx.globalAlpha = 1;
-    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
-    g.addColorStop(0,'rgba(255,240,200,.75)'); g.addColorStop(.5,'rgba(255,240,200,.1)'); g.addColorStop(1,'rgba(0,0,0,.35)');
-    ctx.globalCompositeOperation = 'screen'; ctx.fillStyle = g; ctx.fillRect(cx-R, cy-R, 2*R, 2*R);
-    ctx.restore(); ctx.globalCompositeOperation = 'source-over';
-    ctx.strokeStyle = 'rgba(30,22,18,.95)'; ctx.lineWidth = R*.06; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.283); ctx.stroke();
-  }
-  function tree(ctx, r, x, y, len, ang, w, depth, shade){   // coluna-árvore que se ramifica
-    const x2 = x + Math.cos(ang)*len, y2 = y + Math.sin(ang)*len;
-    const bend = (r()-.5)*len*.25;
-    const mx = (x+x2)/2 + Math.cos(ang+Math.PI/2)*bend, my = (y+y2)/2 + Math.sin(ang+Math.PI/2)*bend;
-    ctx.strokeStyle = shade; ctx.lineWidth = w; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(mx, my, x2, y2); ctx.stroke();
-    // nó elíptico em cada bifurcação (como os "capitéis" das colunas de Gaudí)
-    ctx.fillStyle = shade; ctx.beginPath(); ctx.ellipse(x2, y2, w*.85, w*.6, ang+Math.PI/2, 0, 6.283); ctx.fill();
-    if(depth <= 0){
-      const lg = ctx.createRadialGradient(x2, y2, 0, x2, y2, w*3);
-      lg.addColorStop(0,'rgba(255,230,160,.55)'); lg.addColorStop(1,'rgba(255,230,160,0)');
-      ctx.fillStyle = lg; ctx.beginPath(); ctx.arc(x2, y2, w*3, 0, 6.283); ctx.fill();
-      return;
-    }
-    const n = depth >= 2 && r() < .5 ? 3 : 2;
-    for(let i = 0; i < n; i++){
-      const spread = (n === 3 ? (i-1) : (i ? 1 : -1)) * (.38 + r()*.2);
-      tree(ctx, r, x2, y2, len*(.72 + r()*.1), ang + spread, w*.72, depth-1, shade);
-    }
-  }
-  function drawNave(){ ['nave','nave2'].forEach(id => paintNave(document.getElementById(id))); }
-  function paintNave(nc){
-    const nx = nc.getContext('2d');
-    const d = devicePixelRatio || 1, W = nc.offsetWidth, H = nc.offsetHeight;
-    if(!W || !H) return;
-    nc.width = W*d; nc.height = H*d; nx.setTransform(d,0,0,d,0,0);
-    const r = rng(1882);   // ano do início da obra
-    const S = Math.min(W/1440, H/900) * 1.0 + .15;
-    // fundo: interior de pedra na penumbra
-    let g = nx.createLinearGradient(0,0,0,H);
-    g.addColorStop(0,'#17121a'); g.addColorStop(.55,'#0f0c13'); g.addColorStop(1,'#0c0a10');
-    nx.fillStyle = g; nx.fillRect(0,0,W,H);
-
-    // vitrais: frios à esquerda (Natividade), quentes à direita (Paixão)
-    const wins = [];
-    for(let k = 0; k < 4; k++){
-      const sc = 1/(1 + k*.55);
-      const w = 70*S*sc*1.4, h = 330*S*sc*1.5;
-      const off = W*.47*sc;
-      wins.push({x: W/2 - off - w*.2, y: H*.12 + (1-sc)*H*.18, w, h, pal: COOL, side:-1, sc});
-      wins.push({x: W/2 + off - w*.8, y: H*.12 + (1-sc)*H*.18, w, h, pal: WARM, side: 1, sc});
-    }
-    wins.sort((a,b) => a.sc - b.sc).forEach(o => glassFill(nx, r, o.x, o.y, o.w, o.h, o.pal, Math.max(7, 16*S*o.sc)));
-    rose(nx, r, W*.455, H*.2, Math.min(W,H)*.1);
-
-    // feixes de luz colorida que cruzam a nave
-    nx.globalCompositeOperation = 'screen';
-    wins.forEach(o => {
-      const c = o.pal[Math.floor(r()*o.pal.length)];
-      const fx = W/2 - o.side*W*(.05 + r()*.25), fy = H*1.05;
-      const lg = nx.createLinearGradient(o.x + o.w/2, o.y + o.h*.4, fx, fy);
-      lg.addColorStop(0, c + '55'); lg.addColorStop(1, c + '00');
-      nx.fillStyle = lg; nx.beginPath();
-      nx.moveTo(o.x + o.w*.15, o.y + o.h*.25); nx.lineTo(o.x + o.w*.85, o.y + o.h*.3);
-      nx.lineTo(fx + 120*S*o.sc, fy); nx.lineTo(fx - 120*S*o.sc, fy); nx.closePath(); nx.fill();
-    });
-    nx.globalCompositeOperation = 'source-over';
-
-    // abóbada: luz zenital quente que desce do teto
-    g = nx.createRadialGradient(W*.5, -H*.1, 0, W*.5, -H*.1, H*.75);
-    g.addColorStop(0,'rgba(255,225,160,.55)'); g.addColorStop(.4,'rgba(200,150,90,.18)'); g.addColorStop(1,'rgba(0,0,0,0)');
-    nx.globalCompositeOperation = 'screen'; nx.fillStyle = g; nx.fillRect(0,0,W,H); nx.globalCompositeOperation = 'source-over';
-
-    // floresta de colunas: do fundo para a frente
-    const cols = [];
-    for(let k = 5; k >= 0; k--){
-      const sc = 1/(1 + k*.5);
-      const off = W*.40*sc;
-      [-1, 1].forEach(side => cols.push({x: W/2 + side*off, sc, side}));
-    }
-    cols.forEach(c => {
-      const base = H*(.62 + .45*c.sc), top = H*(.30 - .12*c.sc);
-      const lum = Math.round(40 + 120*c.sc);           // colunas próximas mais claras
-      const w = 34*S*c.sc*1.3;
-      const vg = nx.createLinearGradient(c.x - w*1.2, 0, c.x + w*1.2, 0);   // volume cilíndrico
-      vg.addColorStop(0, `rgb(${lum*.35|0},${lum*.4|0},${lum*.5|0})`);
-      vg.addColorStop(c.side < 0 ? .62 : .38, `rgb(${lum+40},${lum+30},${lum+8})`);
-      vg.addColorStop(1, `rgb(${lum*.5|0},${lum*.35|0},${lum*.3|0})`);
-      const shade = vg;
-      // tronco com leve inclinação para o centro
-      const lean = -c.side * .06;
-      nx.strokeStyle = shade; nx.lineWidth = w; nx.lineCap = 'round';
-      const tx = c.x + Math.sin(lean)*(base-top);
-      nx.beginPath(); nx.moveTo(c.x, base); nx.lineTo(tx, top); nx.stroke();
-      // nó (capitel elíptico) e galhos
-      nx.fillStyle = shade; nx.beginPath(); nx.ellipse(tx, top, w*.9, w*.55, 0, 0, 6.283); nx.fill();
-      tree(nx, r, tx, top, 110*S*c.sc*1.3, -Math.PI/2 + lean, w*.75, 3, shade);
-    });
-
-    // óculos do teto (as "flores" de luz da abóbada)
-    for(let i = 0; i < 9; i++){
-      const ox = W*(.08 + r()*.84), oy = H*(.02 + r()*.12), R = (10 + r()*16)*S;
-      const og = nx.createRadialGradient(ox, oy, 0, ox, oy, R*3);
-      og.addColorStop(0,'rgba(255,236,170,.9)'); og.addColorStop(.25,'rgba(255,214,120,.35)'); og.addColorStop(1,'rgba(255,214,120,0)');
-      nx.fillStyle = og; nx.beginPath(); nx.arc(ox, oy, R*3, 0, 6.283); nx.fill();
-      nx.strokeStyle = 'rgba(255,230,170,.35)'; nx.lineWidth = 1;
-      for(let p = 0; p < 12; p++){ const a = p/12*6.283; nx.beginPath(); nx.moveTo(ox+Math.cos(a)*R, oy+Math.sin(a)*R); nx.lineTo(ox+Math.cos(a)*R*2, oy+Math.sin(a)*R*2); nx.stroke(); }
-    }
-
-    // luz colorida tingindo as colunas
-    nx.globalCompositeOperation = 'soft-light';
-    g = nx.createLinearGradient(0,0,W,0);
-    g.addColorStop(0,'rgba(40,120,210,.8)'); g.addColorStop(.5,'rgba(255,220,160,.2)'); g.addColorStop(1,'rgba(235,100,40,.8)');
-    nx.fillStyle = g; nx.fillRect(0,0,W,H);
-    nx.globalCompositeOperation = 'source-over';
-
-    // leitura do texto (escurece à esquerda) e transição para a página
-    if(W < 700){ nx.fillStyle = 'rgba(10,8,14,.5)'; nx.fillRect(0,0,W,H); }
-    g = nx.createLinearGradient(0,0,W*.55,0);
-    g.addColorStop(0,'rgba(10,8,14,.88)'); g.addColorStop(.55,'rgba(10,8,14,.62)'); g.addColorStop(1,'rgba(10,8,14,0)');
-    nx.fillStyle = g; nx.fillRect(0,0,W,H);
-    g = nx.createLinearGradient(0,H*.7,0,H);
-    g.addColorStop(0,'rgba(12,10,16,0)'); g.addColorStop(1,'rgba(12,10,16,1)');
-    nx.fillStyle = g; nx.fillRect(0,0,W,H);
-  }
-
-
-  /* ---------- F · hiperboloide regrado + arcos catenários ---------- */
+  /* ---------- hiperboloide regrado + arcos catenários ---------- */
   const hc = document.getElementById('hyper'), hx = hc.getContext('2d');
   const LIGHT = ['#3b78c8','#3aa58a','#e0902f','#cf4a36','#c99a2e'];
-  let hyRun = false, twistT = .78, twistGoal = .78, rot = 0;
+  let twistT = .78, twistGoal = .78, rot = 0;
   addEventListener('pointermove', e => { twistGoal = .55 + (e.clientX / innerWidth) * .4; }, {passive:true});
+
   function catenary(cx, baseY, halfW, height, a){   // arco catenário invertido: y = a·cosh(x/a)
     const k = height / (a*Math.cosh(halfW/a) - a);
     hx.beginPath();
@@ -952,14 +374,12 @@
   }
   function drawHyper(){
     const d = devicePixelRatio || 1, W = hc.offsetWidth, H = hc.offsetHeight;
-    if(!W || !H){ hyRun = false; return; }
-    if(hc.width !== Math.round(W*d)){ hc.width = W*d; hc.height = H*d; }
+    if(hc.width !== Math.round(W*d) || hc.height !== Math.round(H*d)){ hc.width = W*d; hc.height = H*d; }
     hx.setTransform(d,0,0,d,0,0); hx.clearRect(0,0,W,H);
     const wide = W > 900;
     const cx = wide ? W*.69 : W*.5, cy = wide ? H*.44 : H*.66;
     const S = Math.min(wide ? W*.25 : W*.66, H*.5) / 2;
 
-    // arcos catenários recuando em perspectiva (eco dos corredores da Casa Batlló)
     hx.lineWidth = 1.2;
     for(let k = 0; k < 6; k++){
       const f = 1 / (1 + k*.35);
@@ -970,13 +390,13 @@
     // hiperboloide de uma folha: segmentos ligando dois círculos defasados
     twistT += (twistGoal - twistT) * .04;
     const N = 72, R = S*.82, h = S*.95, tw = Math.PI * twistT, tilt = -.32;
-    const P = (x, y, z) => {                       // rotação em X + perspectiva
+    const P = (x, y, z) => {
       const yy = y*Math.cos(tilt) - z*Math.sin(tilt), zz = y*Math.sin(tilt) + z*Math.cos(tilt);
       const p = 1 / (1 + zz / (S*5));
       return [cx + x*p, cy - yy*p, zz];
     };
     const segs = [];
-    for(let fam = 0; fam < 2; fam++){             // duas famílias de retas (a superfície é duplamente regrada)
+    for(let fam = 0; fam < 2; fam++){             // duas famílias de retas: a superfície é duplamente regrada
       const sg = fam ? -1 : 1;
       for(let i = 0; i < N; i++){
         const a = i/N*6.283 + rot;
@@ -986,53 +406,29 @@
       }
     }
     segs.sort((p, q) => q.z - p.z);
-    for(const sgm of segs){
-      const front = Math.max(0, Math.min(1, .5 - sgm.z/(R*2)));
-      const g = hx.createLinearGradient(sgm.A[0], sgm.A[1], sgm.B[0], sgm.B[1]);
+    for(const sg of segs){
+      const front = Math.max(0, Math.min(1, .5 - sg.z/(R*2)));
+      const g = hx.createLinearGradient(sg.A[0], sg.A[1], sg.B[0], sg.B[1]);
       g.addColorStop(0, `rgba(60,48,34,${.12 + .5*front})`);
-      g.addColorStop(1, sgm.c + Math.round((.15 + .55*front)*255).toString(16).padStart(2,'0'));
+      g.addColorStop(1, sg.c + Math.round((.15 + .55*front)*255).toString(16).padStart(2,'0'));
       hx.strokeStyle = g; hx.lineWidth = .6 + front*1.1;
-      hx.beginPath(); hx.moveTo(sgm.A[0], sgm.A[1]); hx.lineTo(sgm.B[0], sgm.B[1]); hx.stroke();
+      hx.beginPath(); hx.moveTo(sg.A[0], sg.A[1]); hx.lineTo(sg.B[0], sg.B[1]); hx.stroke();
     }
-    // aros superior e inferior
     hx.strokeStyle = 'rgba(60,48,34,.45)'; hx.lineWidth = 1.4;
     [-h, h].forEach(y => {
       hx.beginPath();
       for(let i = 0; i <= 96; i++){ const a = i/96*6.283; const q = P(R*Math.cos(a), y, R*Math.sin(a)); i ? hx.lineTo(q[0], q[1]) : hx.moveTo(q[0], q[1]); }
       hx.stroke();
     });
-    // brilho na garganta (onde as retas se cruzam mais)
     const t = P(0, 0, 0);
     const gl = hx.createRadialGradient(t[0], t[1], 0, t[0], t[1], S*.7);
     gl.addColorStop(0,'rgba(255,225,150,.45)'); gl.addColorStop(1,'rgba(255,225,150,0)');
     hx.fillStyle = gl; hx.fillRect(t[0]-S, t[1]-S, 2*S, 2*S);
 
-    if(!reduce){ rot += .0022; requestAnimationFrame(drawHyper); } else hyRun = false;
+    if(!reduce){ rot += .0022; requestAnimationFrame(drawHyper); }
   }
-  function startHyper(){ if(!hyRun){ hyRun = true; requestAnimationFrame(drawHyper); } }
-
-  let rt; const redraw = () => { sizeStars(); drawMosaic(); drawNave(); if(document.documentElement.dataset.tema === 'gaudi') startHyper(); if(reduce) drawStars(0); };
-  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(redraw, 150); });
-  redraw(); requestAnimationFrame(drawStars);
-
-  /* ---------- cabeçalho de vidro ao rolar ---------- */
-  const hdr = document.querySelector('header.top');
-  const onScroll = () => hdr.classList.toggle('scrolled', scrollY > 40);
-  addEventListener('scroll', onScroll, {passive:true}); onScroll();
-
-  /* ---------- seletor de opções (remover após escolher) ---------- */
-  const root = document.documentElement;
-  const btns = document.querySelectorAll('.picker button');
-  function setTema(t){
-    root.dataset.tema = t;
-    btns.forEach(b => b.setAttribute('aria-pressed', b.dataset.t === t));
-    try{ localStorage.setItem('tema', t); }catch(e){}
-    drawMosaic(); drawNave(); if(t === 'gaudi') startHyper();
-  }
-  btns.forEach(b => b.addEventListener('click', () => setTema(b.dataset.t)));
-  let t0 = new URLSearchParams(location.search).get('tema');
-  if(!t0){ try{ t0 = localStorage.getItem('tema'); }catch(e){} }
-  setTema(['vidro','vitral','cristal','catedral','perspectiva','gaudi'].includes(t0) ? t0 : 'gaudi');
+  drawHyper();
+  if(reduce) addEventListener('resize', drawHyper);
 
   /* ---------- revelar ao rolar ---------- */
   const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12});
