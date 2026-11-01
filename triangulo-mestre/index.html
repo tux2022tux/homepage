@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Triângulo Mestre — Laboratório de Relações Métricas</title>
   
+  <!-- Tipografia do divonei.com -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#f2ece1">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons CDN -->
@@ -18,19 +23,24 @@
       theme: {
         extend: {
           colors: {
+            /* Paleta do divonei.com: ouro (#a86f1c) como cor de destaque */
             brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              200: '#c7d2fe',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-              800: '#3730a3',
-              900: '#312e81',
-            }
+              50: '#fbf6ec', 100: '#f5e8cf', 200: '#ebd2a3', 300: '#dcb46e', 400: '#cb9446',
+              500: '#b87d27', 600: '#a86f1c', 700: '#8a5914', 800: '#6c4511', 900: '#4f330e', 950: '#2e1e08',
+            },
+            indigo: {
+              50: '#fbf6ec', 100: '#f5e8cf', 200: '#ebd2a3', 300: '#dcb46e', 400: '#cb9446',
+              500: '#b87d27', 600: '#a86f1c', 700: '#8a5914', 800: '#6c4511', 900: '#4f330e', 950: '#2e1e08',
+            },
+            /* Neutros quentes (tinta sobre papel) no lugar do cinza-azulado */
+            slate: {
+              50: '#f7f2e9', 100: '#efe8db', 200: '#e2d8c7', 300: '#cdbfa9', 400: '#a99b86',
+              500: '#8b806f', 600: '#6f6455', 700: '#5c5245', 800: '#40372c', 900: '#2b241c', 950: '#1c1712',
+            },
           },
           fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            sans: ['"Instrument Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            serif: ['Fraunces', 'Georgia', 'serif'],
           }
         }
       }
@@ -43,23 +53,23 @@
       -webkit-tap-highlight-color: transparent;
     }
     input[type=range] {
-      accent-color: #4f46e5;
+      accent-color: #a86f1c;
     }
     .custom-scrollbar::-webkit-scrollbar {
       height: 6px;
       width: 6px;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
+      background: #cdbfa9;
       border-radius: 6px;
     }
-    #geoScrollContainer { scrollbar-color: #64748b #0f172a; }
+    #geoScrollContainer { scrollbar-color: #8b806f #1c1712; }
     #dragHandle { cursor: grab; touch-action: none; }
     #dragHandle:active { cursor: grabbing; }
     .lab-panel { background: white; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1rem; }
-    .lab-btn { border: 1px solid #cbd5e1; padding: .55rem .7rem; border-radius: .7rem; font-weight: 700; font-size: .78rem; transition: all 0.15s ease; }
+    .lab-btn { border: 1px solid #cdbfa9; padding: .55rem .7rem; border-radius: .7rem; font-weight: 700; font-size: .78rem; transition: all 0.15s ease; }
     .lab-btn:active { transform: scale(0.97); }
-    .lab-btn[aria-pressed="true"] { background: #4f46e5; color: white; border-color: #4f46e5; }
+    .lab-btn[aria-pressed="true"] { background: #2b241c; color: #f2ece1; border-color: #2b241c; }
     .lab-output { min-height: 2.6rem; border-radius: .7rem; padding: .8rem; background: #f1f5f9; font-size: .8rem; line-height: 1.65; }
     .mini-geometry svg { width:100%; height:auto; display:block; }
     @media (min-width: 768px) { body.projector-mode #mainStudentArea { max-width: 1100px; } body.projector-mode .lab-panel { font-size: 1.12rem; } }
@@ -69,39 +79,80 @@
       font-weight: 700;
       padding: 0 1px;
     }
+
+    /* ===== Identidade visual do divonei.com (vidro, papel, ouro) ===== */
+    :root{
+      --bg:#f2ece1; --ink:#2b241c; --ink-soft:#5c5245; --gold:#a86f1c;
+      --glass-bg:rgba(255,252,246,.55); --glass-bg-strong:rgba(250,246,238,.82);
+      --glass-border:rgba(255,255,255,.75); --glass-hi:rgba(255,255,255,.55);
+      --glass-shadow:0 24px 50px -28px rgba(80,55,20,.35);
+    }
+    body.tm-body{ background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; }
+    .tm-orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+    .tm-orbs i{position:absolute;border-radius:50%;filter:blur(80px)}
+    .tm-orbs i:nth-child(1){width:46vw;height:46vw;left:-10vw;top:10vh;background:rgba(70,130,210,.22)}
+    .tm-orbs i:nth-child(2){width:38vw;height:38vw;right:-8vw;top:30vh;background:rgba(240,150,60,.24)}
+    .tm-orbs i:nth-child(3){width:30vw;height:30vw;left:30vw;bottom:-10vh;background:rgba(80,175,140,.20)}
+    .tm-orbs i:nth-child(4){width:24vw;height:24vw;right:22vw;top:-6vh;background:rgba(215,80,60,.18)}
+    .tm-glass, main .bg-white.rounded-2xl{
+      background:linear-gradient(135deg,var(--glass-hi),transparent 40%),var(--glass-bg) !important;
+      -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%);
+      border:1px solid var(--glass-border) !important;
+      box-shadow:var(--glass-shadow), inset 0 1px 0 var(--glass-hi) !important;
+    }
+    main .bg-white.rounded-2xl{ border-radius:22px !important; }
+    .tm-header, .tm-bottomnav{
+      background:var(--glass-bg-strong);
+      -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%);
+      border-color:var(--glass-border);
+    }
+    .tm-header{ border-bottom:1px solid var(--glass-border); }
+    .tm-brand{ font-family:'Fraunces',Georgia,serif; font-weight:400; letter-spacing:-.01em; }
+    .tm-brand span{ color:var(--gold); }
+    .tm-pill{ background:var(--ink); color:var(--bg); border-radius:999px; }
+    .tm-pill:hover{ background:#4a3d2e; }
+    main h2, .modal-title{ font-family:'Fraunces',Georgia,serif; font-weight:400; letter-spacing:-.01em; }
+    .lab-btn{ border-radius:999px; background:rgba(255,252,246,.7); border-color:rgba(43,36,28,.15); }
+    .lab-btn:hover{ background:#fff; }
+    :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+    @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans pb-24 select-none">
+<body class="tm-body text-slate-800 min-h-screen flex flex-col font-sans pb-24 select-none">
+  <div class="tm-orbs" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 
   <!-- CABEÇALHO SUPERIOR -->
-  <header class="bg-gradient-to-r from-brand-800 via-brand-700 to-indigo-600 text-white shadow-md sticky top-0 z-40">
-    <div class="max-w-xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center space-x-2.5">
-        <div class="bg-white/10 p-2 rounded-xl backdrop-blur-sm border border-white/10 shadow-xs">
-          <i data-lucide="triangle" class="w-6 h-6 text-amber-300 transform rotate-180"></i>
+  <header class="tm-header text-slate-900 sticky top-0 z-40">
+    <div class="max-w-xl lg:max-w-6xl mx-auto px-4 lg:px-6 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center space-x-2.5 min-w-0">
+        <div class="tm-glass p-2 rounded-xl">
+          <i data-lucide="triangle" class="w-6 h-6 text-brand-600 transform rotate-180"></i>
         </div>
         <div>
-          <h1 class="text-lg font-black tracking-tight leading-tight">Triângulo Mestre</h1>
-          <p class="text-xs text-indigo-100 font-medium">Relações Métricas • 9º Ano &amp; EM</p>
+          <h1 class="tm-brand text-xl leading-tight">Triângulo Mestre</h1>
+          <p class="text-xs text-slate-500 font-medium">Relações Métricas • 9º Ano &amp; EM</p>
         </div>
       </div>
 
       <!-- BOTÃO DE ACESSO EXCLUSIVO DO PROFESSOR (COM CADEADO) -->
-      <button onclick="handleTeacherAccessButton()" id="btnTeacherAccess" class="flex items-center gap-1.5 text-xs font-bold px-3 py-2 bg-amber-400 text-slate-950 hover:bg-amber-300 active:scale-95 transition rounded-xl shadow-sm border border-amber-300">
+      <button onclick="handleTeacherAccessButton()" id="btnTeacherAccess" class="tm-pill shrink-0 flex items-center gap-1.5 text-xs font-semibold px-4 py-2 active:scale-95 transition shadow-sm">
         <i id="headerLockIcon" data-lucide="lock" class="w-4 h-4"></i>
-        <span id="headerLockText">Área do Professor</span>
+        <span id="headerLockText" class="sr-only sm:not-sr-only whitespace-nowrap">Área do Professor</span>
       </button>
     </div>
   </header>
 
   <!-- CONTEÚDO PRINCIPAL (MODO ALUNO) -->
-  <main id="mainStudentArea" class="max-w-xl mx-auto w-full px-3.5 pt-3.5 flex-1">
+  <main id="mainStudentArea" class="relative z-10 max-w-xl lg:max-w-6xl mx-auto w-full px-3.5 lg:px-6 pt-3.5 lg:pt-6 flex-1">
 
     <!-- ========================================================= -->
     <!-- ABA 1: EXPLORADOR VISUAL (ESTADO CENTRALIZADO E IMUTÁVEL) -->
     <!-- ========================================================= -->
     <section id="tab-explorer" class="tab-content block space-y-4">
-      <div class="bg-white rounded-2xl p-4 shadow-xs border border-slate-200">
+      <div class="bg-white rounded-2xl p-4 lg:p-6 shadow-xs border border-slate-200">
+        <!-- Layout adaptativo: 1 coluna no celular, 2 colunas no computador -->
+        <div class="lg:grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-6 lg:items-start">
+        <div class="min-w-0">
         
         <!-- Configuração de Modo & Passo -->
         <div class="flex flex-col gap-3 pb-3 border-b border-slate-100">
@@ -134,16 +185,16 @@
 
         <!-- QUADRO MILIMETRADO COM ESCALA MÉTRICA FIXA (SEM AUTO-ZOOM) -->
         <div class="relative w-full my-3">
-          <div class="flex justify-between items-center px-1 mb-1 text-xs text-slate-500">
+          <div class="flex justify-between items-center gap-2 px-1 mb-1 text-xs text-slate-500">
             <span class="flex items-center gap-1 font-semibold text-slate-600">
               <i data-lucide="grid" class="w-4 h-4 text-brand-600"></i> Escala fixa: 1 unidade = 16 px • <span id="geometryDragLabel">arraste A</span>
             </span>
-            <button onclick="resetCanvasScroll()" class="text-xs font-bold text-brand-600 hover:text-brand-800 bg-brand-50 border border-brand-200 px-2.5 py-1 rounded-lg flex items-center gap-1 transition">
+            <button onclick="resetCanvasScroll()" class="shrink-0 whitespace-nowrap text-xs font-bold text-brand-600 hover:text-brand-800 bg-brand-50 border border-brand-200 px-2.5 py-1 rounded-lg flex items-center gap-1 transition">
               <i data-lucide="crosshair" class="w-3.5 h-3.5"></i> Focar Vértice B
             </button>
           </div>
 
-          <div id="geoScrollContainer" class="relative w-full h-[310px] bg-slate-950 rounded-xl overflow-auto shadow-inner border border-slate-800 custom-scrollbar select-none">
+          <div id="geoScrollContainer" class="relative w-full h-[310px] lg:h-[380px] bg-slate-950 rounded-xl overflow-auto shadow-inner border border-slate-800 custom-scrollbar select-none">
             <svg id="geoSvg" width="760" height="270" viewBox="0 0 760 270" class="block" role="img" aria-label="Triângulo retângulo interativo: arraste o ponto A e o ângulo reto será preservado">
               <!-- Renderizado dinamicamente em escala métrica 100% constante -->
             </svg>
@@ -160,74 +211,8 @@
           <button class="lab-btn bg-slate-50" onclick="loadClassicTriangle(8,15)">8–15–17</button>
           <button class="lab-btn bg-slate-50" onclick="loadClassicTriangle(6,8)">Reiniciar</button>
         </div>
-        <div class="flex justify-between items-center bg-indigo-50 border border-indigo-100 rounded-xl px-3 py-2 mb-3 gap-2">
-          <span class="text-xs text-indigo-900">Quer descobrir por que as fórmulas funcionam?</span>
-          <button class="text-xs font-bold text-indigo-700 underline" onclick="switchTab('laboratorio')">Abrir laboratório</button>
-        </div>
-
-        <!-- LEGENDA DIDÁTICA DE CORES DISTINTAS PARA CADA SEGMENTO -->
-        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200/90 mb-3">
-          <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 text-center">Identificação por Cor dos Segmentos</div>
-          <div class="grid grid-cols-3 gap-1.5 text-[11px] font-medium text-slate-700">
-            <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200 shadow-2xs">
-              <span class="w-3 h-3 rounded-full bg-purple-500 shrink-0"></span>
-              <span>Cateto <span class="math-var">b</span></span>
-            </div>
-            <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200 shadow-2xs">
-              <span class="w-3 h-3 rounded-full bg-emerald-500 shrink-0"></span>
-              <span>Cateto <span class="math-var">c</span></span>
-            </div>
-            <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200 shadow-2xs">
-              <span class="w-3 h-3 rounded-full bg-amber-500 shrink-0"></span>
-              <span>Altura <span class="math-var">h</span></span>
-            </div>
-            <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200 shadow-2xs">
-              <span class="w-3 h-3 rounded-full bg-pink-500 shrink-0"></span>
-              <span>Projeção <span class="math-var">m</span></span>
-            </div>
-            <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200 shadow-2xs">
-              <span class="w-3 h-3 rounded-full bg-orange-500 shrink-0"></span>
-              <span>Projeção <span class="math-var">n</span></span>
-            </div>
-            <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200 shadow-2xs">
-              <span class="w-3 h-3 rounded-full bg-sky-500 shrink-0"></span>
-              <span>Base <span class="math-var">a</span></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- MÓDULO INTERATIVO: O DILEMA DOS 3 TRIÂNGULOS -->
-        <div class="bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 text-white p-3.5 rounded-xl border border-indigo-800/60 space-y-2.5 mb-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-black text-amber-300 flex items-center gap-1.5">
-              <i data-lucide="eye" class="w-4 h-4"></i> O Segredo: "Cateto ou Hipotenusa?"
-            </span>
-            <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded-full font-mono text-indigo-200">3 Triângulos em 1</span>
-          </div>
-
-          <p class="text-xs text-slate-300 leading-snug">
-            A altura relativa <span class="text-amber-300 math-var">h</span> divide o triângulo original em 2 triângulos menores. Toque para inspecionar os papéis:
-          </p>
-
-          <!-- Botões para alternar destaque dos triângulos -->
-          <div class="grid grid-cols-3 gap-1.5 text-xs">
-            <button onclick="highlightTriangleView('total')" id="btnTri-total" class="py-2 px-1 font-bold rounded-lg bg-sky-500 text-slate-950 shadow-xs transition text-center">
-              1. Todo (ABC)
-            </button>
-            <button onclick="highlightTriangleView('esq')" id="btnTri-esq" class="py-2 px-1 font-semibold rounded-lg bg-white/10 text-slate-200 hover:bg-white/20 transition text-center">
-              2. Esquerdo (ABH)
-            </button>
-            <button onclick="highlightTriangleView('dir')" id="btnTri-dir" class="py-2 px-1 font-semibold rounded-lg bg-white/10 text-slate-200 hover:bg-white/20 transition text-center">
-              3. Direito (ACH)
-            </button>
-          </div>
-
-          <!-- Explicação Dinâmica de Cada Triângulo -->
-          <div id="triRoleExplanation" class="p-2.5 bg-black/40 rounded-lg border border-white/10 text-xs text-slate-200 leading-relaxed font-sans">
-            <!-- Inserido dinamicamente via JS -->
-          </div>
-        </div>
-
+        <!-- CONTROLES DESLIZANTES (logo abaixo de Exemplos/Reiniciar) -->
+        <div id="sliderControls" class="mb-3">
         <!-- MODO A: CONTROLE PELOS CATETOS -->
         <div id="controls-catetos" class="space-y-3 bg-slate-50 p-3 rounded-xl border border-slate-200/80">
           <div>
@@ -303,6 +288,78 @@
         </div>
 
         <div id="explorerWarning" role="alert" class="hidden p-3 mb-2 rounded-lg bg-amber-50 text-amber-900 border border-amber-200 text-xs"></div>
+        </div>
+
+        </div>
+        <div class="min-w-0">
+        <div class="flex justify-between items-center bg-indigo-50 border border-indigo-100 rounded-xl px-3 py-2 mb-3 gap-2">
+          <span class="text-xs text-indigo-900">Quer descobrir por que as fórmulas funcionam?</span>
+          <button class="text-xs font-bold text-indigo-700 underline" onclick="switchTab('laboratorio')">Abrir laboratório</button>
+        </div>
+
+        <!-- LEGENDA DIDÁTICA DE CORES DISTINTAS PARA CADA SEGMENTO -->
+        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200/90 mb-3">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 text-center">Identificação por Cor dos Segmentos</div>
+          <div class="grid grid-cols-3 gap-1.5 text-[11px] font-medium text-slate-700">
+            <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200 shadow-2xs">
+              <span class="w-3 h-3 rounded-full bg-purple-500 shrink-0"></span>
+              <span>Cateto <span class="math-var">b</span></span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200 shadow-2xs">
+              <span class="w-3 h-3 rounded-full bg-emerald-500 shrink-0"></span>
+              <span>Cateto <span class="math-var">c</span></span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200 shadow-2xs">
+              <span class="w-3 h-3 rounded-full bg-amber-500 shrink-0"></span>
+              <span>Altura <span class="math-var">h</span></span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200 shadow-2xs">
+              <span class="w-3 h-3 rounded-full bg-pink-500 shrink-0"></span>
+              <span>Projeção <span class="math-var">m</span></span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200 shadow-2xs">
+              <span class="w-3 h-3 rounded-full bg-orange-500 shrink-0"></span>
+              <span>Projeção <span class="math-var">n</span></span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200 shadow-2xs">
+              <span class="w-3 h-3 rounded-full bg-sky-500 shrink-0"></span>
+              <span>Base <span class="math-var">a</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- MÓDULO INTERATIVO: O DILEMA DOS 3 TRIÂNGULOS -->
+        <div class="bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 text-white p-3.5 rounded-xl border border-indigo-800/60 space-y-2.5 mb-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-black text-amber-300 flex items-center gap-1.5">
+              <i data-lucide="eye" class="w-4 h-4"></i> O Segredo: "Cateto ou Hipotenusa?"
+            </span>
+            <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded-full font-mono text-indigo-200">3 Triângulos em 1</span>
+          </div>
+
+          <p class="text-xs text-slate-300 leading-snug">
+            A altura relativa <span class="text-amber-300 math-var">h</span> divide o triângulo original em 2 triângulos menores. Toque para inspecionar os papéis:
+          </p>
+
+          <!-- Botões para alternar destaque dos triângulos -->
+          <div class="grid grid-cols-3 gap-1.5 text-xs">
+            <button onclick="highlightTriangleView('total')" id="btnTri-total" class="py-2 px-1 font-bold rounded-lg bg-sky-500 text-slate-950 shadow-xs transition text-center">
+              1. Todo (ABC)
+            </button>
+            <button onclick="highlightTriangleView('esq')" id="btnTri-esq" class="py-2 px-1 font-semibold rounded-lg bg-white/10 text-slate-200 hover:bg-white/20 transition text-center">
+              2. Esquerdo (ABH)
+            </button>
+            <button onclick="highlightTriangleView('dir')" id="btnTri-dir" class="py-2 px-1 font-semibold rounded-lg bg-white/10 text-slate-200 hover:bg-white/20 transition text-center">
+              3. Direito (ACH)
+            </button>
+          </div>
+
+          <!-- Explicação Dinâmica de Cada Triângulo -->
+          <div id="triRoleExplanation" class="p-2.5 bg-black/40 rounded-lg border border-white/10 text-xs text-slate-200 leading-relaxed font-sans">
+            <!-- Inserido dinamicamente via JS -->
+          </div>
+        </div>
+
         <div class="flex flex-wrap items-center gap-2 text-xs text-slate-700 mb-2" id="allMeasures" aria-live="polite"></div>
         <!-- Resumo Geral das Medidas -->
         <div class="mt-3 grid grid-cols-3 gap-2 text-center">
@@ -318,6 +375,8 @@
             <span class="block text-[11px] text-indigo-700 font-bold uppercase tracking-wider">Catetos <span class="math-var">b</span> / <span class="math-var">c</span></span>
             <span id="metricBC" class="text-xs font-bold text-indigo-950 font-mono mt-1 block">6.00 / 8.00</span>
           </div>
+        </div>
+        </div>
         </div>
       </div>
 
@@ -358,7 +417,7 @@
     <!-- ========================================================= -->
     <!-- ABA 2: FÓRMULAS & MNEMÔNICOS (TIPOGRAFIA MATEMÁTICA PURA) -->
     <!-- ========================================================= -->
-    <section id="tab-formulas" class="tab-content hidden space-y-3.5">
+    <section id="tab-formulas" class="tab-content hidden lg:max-w-3xl lg:mx-auto space-y-3.5">
       <div class="bg-white rounded-2xl p-4 shadow-xs border border-slate-200">
         <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
           <i data-lucide="book-open" class="w-5 h-5 text-brand-600"></i> Fórmulas Fundamentais
@@ -429,7 +488,7 @@
     </section>
 
     <!-- ABA: LABORATÓRIO DE INVESTIGAÇÃO -->
-    <section id="tab-laboratorio" class="tab-content hidden space-y-4">
+    <section id="tab-laboratorio" class="tab-content hidden lg:max-w-3xl lg:mx-auto space-y-4">
       <div class="bg-gradient-to-r from-indigo-950 to-slate-900 text-white p-4 rounded-2xl space-y-1">
         <h2 class="text-lg font-black">Laboratório de Geometria</h2>
         <p class="text-xs text-indigo-100 leading-relaxed">Observe &rarr; conjecture &rarr; demonstre. As medidas estão vinculadas ao triângulo da aba Explorar.</p>
@@ -526,7 +585,7 @@
     <!-- ========================================================= -->
     <!-- ABA 3: CALCULADORA UNIVERSAL (TODAS AS 15 COMBINAÇÕES)    -->
     <!-- ========================================================= -->
-    <section id="tab-calculator" class="tab-content hidden space-y-3.5">
+    <section id="tab-calculator" class="tab-content hidden lg:max-w-3xl lg:mx-auto space-y-3.5">
       <!-- BLOQUEIO INICIAL DA CALCULADORA (PEDE SENHA LIBERADA PELO PROFESSOR) -->
       <div id="calcLockedCard" class="bg-white rounded-2xl p-6 shadow-xs border border-slate-200 text-center space-y-4">
         <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mx-auto border border-amber-100 shadow-inner">
@@ -626,7 +685,7 @@
     <!-- ========================================================= -->
     <!-- ABA 4: QUIZ (10 QUESTÕES) - ÁREA DO ALUNO                -->
     <!-- ========================================================= -->
-    <section id="tab-quiz" class="tab-content hidden space-y-3.5">
+    <section id="tab-quiz" class="tab-content hidden lg:max-w-3xl lg:mx-auto space-y-3.5">
       
       <!-- FASE 1: IDENTIFICAÇÃO DO ALUNO (NOME E TURMA OBRIGATÓRIOS) -->
       <div id="quizLoginCard" class="bg-white rounded-2xl p-5 shadow-xs border border-slate-200 space-y-4">
@@ -814,7 +873,7 @@
   <!-- PAINEL EXCLUSIVO DO PROFESSOR (DASHBOARD COMPLETO)       -->
   <!-- ========================================================= -->
   <div id="teacherDashboardModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-3 hidden">
-    <div class="bg-white w-full max-w-xl max-h-[94vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-200">
+    <div class="bg-white w-full max-w-xl lg:max-w-4xl max-h-[94vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-200">
       
       <!-- Topo do Painel Docente -->
       <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-brand-900 text-white p-4 flex items-center justify-between">
@@ -990,8 +1049,8 @@
   </div>
 
   <!-- NAVEGAÇÃO INFERIOR FIXA (MOBILE FIRST) -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40">
-    <div class="max-w-xl mx-auto flex justify-around items-center px-2 py-2">
+  <nav class="tm-bottomnav fixed bottom-0 left-0 right-0 border-t z-40 lg:left-1/2 lg:right-auto lg:-translate-x-1/2 lg:bottom-4 lg:border lg:rounded-full lg:shadow-lg lg:px-4">
+    <div class="max-w-xl lg:w-[560px] mx-auto flex justify-around items-center px-2 py-2">
       <button onclick="switchTab('explorer')" class="nav-btn flex flex-col items-center py-1 px-3 rounded-xl text-xs font-bold text-brand-600 transition" data-tab="explorer">
         <i data-lucide="compass" class="w-5 h-5 mb-0.5"></i>
         <span>Explorar</span>
@@ -1404,12 +1463,12 @@
       const aB = Math.atan2(h, m) * 180 / Math.PI;
       const aC = 90 - aB;
       const semiR = a * UNIT_PX / 2;
-      const squareRect = (x,y,label,stroke) => `<g transform="translate(${x},${y})"><rect x="-30" y="-12" width="60" height="21" rx="6" fill="#0f172a" stroke="${stroke}"/><text text-anchor="middle" y="3" font-size="12" font-weight="700" fill="${stroke}">${label}</text></g>`;
+      const squareRect = (x,y,label,stroke) => `<g transform="translate(${x},${y})"><rect x="-30" y="-12" width="60" height="21" rx="6" fill="#241e17" stroke="${stroke}"/><text text-anchor="middle" y="3" font-size="12" font-weight="700" fill="${stroke}">${label}</text></g>`;
 
       svg.innerHTML = `
-        <defs><pattern id="gridPattern" width="${UNIT_PX}" height="${UNIT_PX}" patternUnits="userSpaceOnUse"><path d="M ${UNIT_PX} 0 L 0 0 0 ${UNIT_PX}" fill="none" stroke="#334155" stroke-width=".8"/></pattern></defs>
-        <rect width="${width}" height="${height}" fill="#020617"/><rect width="${width}" height="${height}" fill="url(#gridPattern)"/>
-        ${!fixedMode ? `<path d="M ${pBx} ${baseY} A ${semiR} ${semiR} 0 0 1 ${pCx} ${baseY}" fill="none" stroke="#475569" stroke-dasharray="6 6" stroke-width="1.2"/>` : ''}
+        <defs><pattern id="gridPattern" width="${UNIT_PX}" height="${UNIT_PX}" patternUnits="userSpaceOnUse"><path d="M ${UNIT_PX} 0 L 0 0 0 ${UNIT_PX}" fill="none" stroke="#4a4036" stroke-width=".8"/></pattern></defs>
+        <rect width="${width}" height="${height}" fill="#1c1712"/><rect width="${width}" height="${height}" fill="url(#gridPattern)"/>
+        ${!fixedMode ? `<path d="M ${pBx} ${baseY} A ${semiR} ${semiR} 0 0 1 ${pCx} ${baseY}" fill="none" stroke="#5c5245" stroke-dasharray="6 6" stroke-width="1.2"/>` : ''}
         <polygon points="${pBx},${baseY} ${pAx},${pAy} ${pHx},${baseY}" fill="#ec4899" fill-opacity="${activeTriHighlight==='esq'?'.30':activeTriHighlight==='dir'?'.025':'.12'}"/>
         <polygon points="${pHx},${baseY} ${pAx},${pAy} ${pCx},${baseY}" fill="#10b981" fill-opacity="${activeTriHighlight==='dir'?'.30':activeTriHighlight==='esq'?'.025':'.12'}"/>
         <line x1="${pBx}" y1="${baseY}" x2="${pHx}" y2="${baseY}" stroke="#ec4899" stroke-width="4"/>
@@ -1419,8 +1478,8 @@
         <line x1="${pAx}" y1="${pAy}" x2="${pHx}" y2="${baseY}" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="6 4"/>
         <path d="${aSquare}" fill="none" stroke="#fef08a" stroke-width="1.8"/>
         <path d="M ${pHx-11} ${baseY} L ${pHx-11} ${baseY-11} L ${pHx} ${baseY-11}" stroke="#fbbf24" fill="none" stroke-width="1.5"/>
-        <text x="${pBx+25}" y="${baseY-10}" fill="#cbd5e1" font-size="11">${fmt(aB)}°</text>
-        <text x="${pCx-65}" y="${baseY-10}" fill="#cbd5e1" font-size="11">${fmt(aC)}°</text>
+        <text x="${pBx+25}" y="${baseY-10}" fill="#cdbfa9" font-size="11">${fmt(aB)}°</text>
+        <text x="${pCx-65}" y="${baseY-10}" fill="#cdbfa9" font-size="11">${fmt(aC)}°</text>
         <line x1="${pBx}" y1="${baseY+21}" x2="${pCx}" y2="${baseY+21}" stroke="#38bdf8" stroke-width="2"/>
         <text x="${(pBx+pCx)/2}" y="${baseY+39}" fill="#7dd3fc" font-size="13" font-weight="700" text-anchor="middle">a ≈ ${fmt(a)}</text>
         ${showM ? squareRect((pBx+pHx)/2,baseY-16,`m: ${fmt(m)}`,'#f9a8d4'):''}
@@ -1452,14 +1511,14 @@
       return `<div class="border border-slate-200 rounded-xl p-2 bg-slate-50">
         <p class="font-black text-center text-xs text-indigo-900 mb-2">${title}</p>
         <svg viewBox="0 0 175 150" role="img" aria-label="Triângulo ${title}, ângulo reto no vértice ${rightName}">
-          <path d="M 18 124 L 18 ${yy} L ${xx} 124 Z" fill="${color}" fill-opacity=".09" stroke="#0f172a" stroke-width="2"/>
+          <path d="M 18 124 L 18 ${yy} L ${xx} 124 Z" fill="${color}" fill-opacity=".09" stroke="#241e17" stroke-width="2"/>
           <path d="M 18 114 L 28 114 L 28 124" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
           <line x1="18" y1="124" x2="18" y2="${yy}" stroke="#a855f7" stroke-width="3"/>
           <line x1="18" y1="124" x2="${xx}" y2="124" stroke="#10b981" stroke-width="3"/>
           <line x1="18" y1="${yy}" x2="${xx}" y2="124" stroke="#38bdf8" stroke-width="3"/>
-          <text x="5" y="135" font-size="11" fill="#1e293b">${rightName}</text>
-          <text x="13" y="${yy-7}" font-size="11" fill="#1e293b">${topName}</text>
-          <text x="${xx+6}" y="136" font-size="11" fill="#1e293b">${farName}</text>
+          <text x="5" y="135" font-size="11" fill="#3a3128">${rightName}</text>
+          <text x="13" y="${yy-7}" font-size="11" fill="#3a3128">${topName}</text>
+          <text x="${xx+6}" y="136" font-size="11" fill="#3a3128">${farName}</text>
           <text x="5" y="${(124+yy)/2}" font-size="12" fill="#7e22ce" font-weight="bold">${right.verticalLabel}</text>
           <text x="${(xx+18)/2}" y="141" font-size="12" fill="#047857" font-weight="bold" text-anchor="middle">${right.horizontalLabel}</text>
           <text x="${(xx+18)/2+12}" y="${(yy+124)/2-6}" font-size="12" fill="#0369a1" font-weight="bold">${right.hypLabel}</text>
@@ -1555,7 +1614,7 @@
       const sq = q.side * scale, rw = q.x * scale, rh = q.y * scale;
       const rx = 16 + sq + 36;
       const label = (cx, cy, v) => `<text x="${cx}" y="${cy}" fill="white" text-anchor="middle" font-size="12" font-weight="700">${v}</text>`;
-      svg.innerHTML = `<rect x="0" y="0" width="410" height="200" fill="#020617"/>
+      svg.innerHTML = `<rect x="0" y="0" width="410" height="200" fill="#1c1712"/>
         <rect x="16" y="16" width="${sq}" height="${sq}" fill="#818cf8" fill-opacity=".65" stroke="#c7d2fe" stroke-width="2"/>
         <rect x="${rx}" y="16" width="${rw}" height="${rh}" fill="#10b981" fill-opacity=".55" stroke="#a7f3d0" stroke-width="2"/>
         ${label(16 + sq/2, 16 + sq/2, q.sq + '²')}
@@ -2474,7 +2533,7 @@
           labels: ['Abaixo de 60%', '60% a 79%', '80% a 100%'],
           datasets: [{
             data: subs.length > 0 ? [low, mid, high] : [1, 1, 1],
-            backgroundColor: subs.length > 0 ? ['#f87171', '#fbbf24', '#34d399'] : ['#e2e8f0', '#cbd5e1', '#94a3b8']
+            backgroundColor: subs.length > 0 ? ['#f87171', '#fbbf24', '#34d399'] : ['#e2e8f0', '#cdbfa9', '#a99b86']
           }]
         },
         options: {
