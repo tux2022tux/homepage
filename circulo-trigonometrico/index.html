@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Círculo Trigonométrico — divonei.com</title>
+<meta name="description" content="Monte o círculo trigonométrico em etapas, junto com a turma: seno, cosseno, Pitágoras, ângulos notáveis, simetrias, tangente, radianos e a senoide.">
+<meta name="theme-color" content="#f2ece1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f2ece1'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%232b241c' stroke-width='1.5'/%3E%3Cpath d='M16 16 L23.5 9.5 M23.5 9.5 V16 M16 16 H23.5' fill='none' stroke='%23a86f1c' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f2ece1; --bg-2:#ebe3d5;
+    --ink:#2b241c; --ink-soft:#5c5245; --ink-mute:#8b806f;
+    --gold:#a86f1c;
+    --cos:#3b78c8; --sen:#cf4a36; --tan:#3aa58a;
+    --line:rgba(43,36,28,.12);
+    --glass-bg:rgba(255,252,246,.48); --glass-bg-strong:rgba(250,246,238,.80);
+    --glass-border:rgba(255,255,255,.75); --glass-hi:rgba(255,255,255,.55);
+    --glass-shadow:0 24px 50px -28px rgba(80,55,20,.35);
+    --serif:"Fraunces", Georgia, serif;
+    --sans:"Instrument Sans", system-ui, sans-serif;
+    --wrap:1320px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  button{font:inherit;color:inherit}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+  .glass{
+    background:linear-gradient(135deg,var(--glass-hi),transparent 40%),var(--glass-bg);
+    -webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);
+    border:1px solid var(--glass-border);
+    box-shadow:var(--glass-shadow), inset 0 1px 0 var(--glass-hi);
+  }
+  .orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .orbs i{position:absolute;border-radius:50%;filter:blur(80px)}
+  .orbs i:nth-child(1){width:46vw;height:46vw;left:-10vw;top:10vh;background:rgba(70,130,210,.24);animation:drift 26s ease-in-out infinite}
+  .orbs i:nth-child(2){width:38vw;height:38vw;right:-8vw;top:30vh;background:rgba(240,150,60,.26);animation:drift 32s ease-in-out infinite reverse}
+  .orbs i:nth-child(3){width:30vw;height:30vw;left:30vw;bottom:-10vh;background:rgba(80,175,140,.20);animation:drift 38s ease-in-out infinite}
+  .orbs i:nth-child(4){width:24vw;height:24vw;right:22vw;top:-6vh;background:rgba(215,80,60,.18);animation:drift 30s ease-in-out infinite reverse}
+  @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(6vw,-4vh) scale(1.08)}66%{transform:translate(-4vw,5vh) scale(.95)}}
+
+  /* cabeçalho */
+  header.top{position:fixed;inset:0 0 auto 0;z-index:10;background:var(--glass-bg-strong);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid var(--glass-border)}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:66px}
+  .brand{font-family:var(--serif);font-size:1.4rem;text-decoration:none;letter-spacing:-.01em;white-space:nowrap}
+  .brand span{color:var(--gold)}
+  .tools{display:flex;gap:6px;align-items:center}
+  .chip{border:1px solid rgba(43,36,28,.15);background:rgba(255,252,246,.6);padding:7px 14px;border-radius:999px;font-size:.86rem;color:var(--ink-soft);cursor:pointer;text-decoration:none;transition:background .2s,color .2s;white-space:nowrap}
+  .chip:hover{background:#fff;color:var(--ink)}
+  .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+  main{position:relative;z-index:1;padding:86px 0 40px}
+  .intro{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(1.9rem,3.2vw,2.7rem);line-height:1;letter-spacing:-.02em}
+  h1 em{font-style:italic;color:var(--gold)}
+  .intro p{color:var(--ink-mute);max-width:46ch;font-size:.97rem}
+
+  /* laboratório */
+  .lab{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:22px;align-items:start}
+  .stage{border-radius:26px;padding:12px;display:flex;justify-content:center}
+  #cv{width:100%;height:auto;max-height:calc(100vh - 275px);touch-action:none;user-select:none;-webkit-user-select:none;cursor:crosshair}
+  .panel{border-radius:26px;padding:24px 24px 22px;position:sticky;top:84px;max-height:calc(100vh - 100px);overflow:auto}
+  .count{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+  .count .layers{letter-spacing:0;text-transform:none;color:var(--ink-mute);font-size:.82rem}
+  .panel h2{font-family:var(--serif);font-weight:400;font-size:1.65rem;line-height:1.15;margin:8px 0 10px;letter-spacing:-.01em}
+  .panel .txt{color:var(--ink-soft);font-size:.98rem}
+  .ask{margin-top:14px;padding:12px 14px;border-left:3px solid var(--gold);background:rgba(168,111,28,.07);border-radius:0 12px 12px 0;font-size:.95rem}
+  .ask b{display:block;font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold);font-size:1rem;margin-bottom:2px}
+
+  .stepnav{display:flex;gap:8px;margin-top:18px}
+  .btn{flex:1;display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font-weight:600;font-size:.93rem;cursor:pointer;transition:transform .15s,background .2s,opacity .2s}
+  .btn:hover{background:#4a3d2e}
+  .btn:active{transform:scale(.97)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:rgba(43,36,28,.25)}
+  .btn.ghost:hover{background:rgba(255,255,255,.6)}
+  .btn:disabled{opacity:.35;cursor:default}
+  .dots{display:flex;gap:6px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  .dots button{width:24px;height:24px;border-radius:50%;border:1px solid rgba(43,36,28,.22);background:rgba(255,252,246,.6);font-size:.68rem;color:var(--ink-mute);cursor:pointer;padding:0}
+  .dots button.done{background:rgba(168,111,28,.18);border-color:rgba(168,111,28,.4);color:var(--ink-soft)}
+  .dots button.on{background:var(--gold);border-color:var(--gold);color:#fff}
+
+  .sep{height:1px;background:var(--line);margin:18px 0 14px}
+  .lab.wide{grid-template-columns:1fr}
+  .lab.wide .panel{position:static;max-height:none;display:grid;grid-template-columns:1fr 1fr;column-gap:40px}
+  .lab.wide .sep.first{display:none}
+  .lab.wide #cv{max-height:none}
+  @media (max-width:800px){ .lab.wide .panel{grid-template-columns:1fr} .lab.wide .sep.first{display:block} }
+  .reads{display:grid;gap:2px}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:.93rem}
+  .row:last-child{border-bottom:0}
+  .row span{color:var(--ink-mute)}
+  .row b{font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+  .row.c b{color:var(--cos)} .row.s b{color:var(--sen)} .row.t b{color:var(--tan)} .row.g b{color:var(--gold)}
+  .row.big{padding:9px 0}
+  .row.big b{font-size:1.04rem}
+  .flag{font-size:.86rem;padding:8px 12px;border-radius:12px;margin-top:8px;background:rgba(255,252,246,.7);border:1px solid var(--line)}
+  .flag.ok{border-color:rgba(58,165,138,.5);background:rgba(58,165,138,.1)}
+  .flag.no{border-color:rgba(207,74,54,.4);background:rgba(207,74,54,.08)}
+
+  .ctrls{display:grid;gap:10px}
+  .ctrls label.rng{display:grid;gap:4px;font-size:.84rem;color:var(--ink-mute)}
+  input[type=range]{width:100%;accent-color:var(--gold)}
+  .btns{display:flex;flex-wrap:wrap;gap:6px}
+  details{margin-top:4px}
+  summary{cursor:pointer;font-size:.88rem;color:var(--ink-soft);padding:6px 0}
+  .layerlist{display:grid;gap:4px;margin-top:6px}
+  .layerlist label{display:flex;gap:10px;align-items:center;font-size:.9rem;color:var(--ink-soft);cursor:pointer}
+  .layerlist input{accent-color:var(--gold);width:16px;height:16px}
+  .hint{font-size:.8rem;color:var(--ink-mute);margin-top:10px}
+
+  /* faixa da trilha */
+  .trail{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding:8px 10px 8px 16px;border-radius:999px;font-size:.86rem}
+  .trail .where{color:var(--ink-mute);text-decoration:none}
+  .trail .where b{color:var(--gold);font-weight:600}
+  .trail .where:hover b{text-decoration:underline}
+  .trail nav{display:flex;gap:6px}
+  .trail nav a,.trail nav span{padding:5px 12px;border-radius:999px;text-decoration:none;color:var(--ink-soft);border:1px solid rgba(43,36,28,.12);background:rgba(255,252,246,.6);white-space:nowrap}
+  .trail nav a:hover{background:#fff;color:var(--ink)}
+  .trail nav span{opacity:.55}
+  .trail nav small{font-size:.72rem;color:var(--ink-mute);margin-left:4px}
+  body.proj .trail{display:none}
+  @media (max-width:560px){ .trail{border-radius:16px} .trail nav{width:100%} .trail nav a,.trail nav span{flex:1;text-align:center} }
+
+  /* SVG */
+  #cv text{font-family:var(--sans);font-size:15px;fill:var(--ink-soft)}
+  #cv text.m{font-family:var(--serif);font-style:italic;font-size:19px;fill:var(--ink)}
+  #cv text.sm{font-size:13px;fill:var(--ink-mute)}
+  #cv text.c{fill:var(--cos)} #cv text.s{fill:var(--sen)} #cv text.t{fill:var(--tan)} #cv text.g{fill:var(--gold)}
+  #cv text.b{font-weight:600}
+  #cv text.q{font-family:var(--serif);font-size:30px;fill:rgba(43,36,28,.22)}
+  #cv .halo{paint-order:stroke;stroke:rgba(248,243,234,.92);stroke-width:5px;stroke-linejoin:round}
+
+  footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:26px 0;color:var(--ink-mute);font-size:.84rem}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+  /* modo projetor: mais espaço para o círculo e letras maiores */
+  body.proj .intro{display:none}
+  body.proj main{padding-top:80px}
+  body.proj #cv{max-height:calc(100vh - 115px)}
+  body.proj .panel{font-size:1.12em}
+  body.proj .panel h2{font-size:2rem}
+  body.proj .panel .txt,body.proj .ask{font-size:1.08rem}
+  body.proj #cv text{font-size:17px}
+  body.proj #cv text.m{font-size:22px}
+
+  @media (max-width:1020px){
+    .lab{grid-template-columns:1fr}
+    .panel{position:static;max-height:none}
+    .intro{flex-direction:column;align-items:flex-start;gap:10px}
+    #cv{max-height:none}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 14px}
+    .tools .opt{display:none}
+    .stage{padding:4px;border-radius:18px}
+    .panel{padding:20px 18px}
+  }
+  @media (prefers-reduced-motion:reduce){ .orbs i{animation:none} }
+</style>
+</head>
+<body>
+<div class="orbs" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/">divonei<span>.</span>com</a>
+    <div class="tools">
+      <a class="chip" href="/#projetos">Projetos</a>
+      <button class="chip opt" id="projBtn" aria-pressed="false" title="Letras maiores e círculo ocupando a tela">Modo projetor</button>
+      <button class="chip opt" id="fsBtn" title="Tela cheia">Tela cheia</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="trail glass">
+      <a class="where" href="/trigonometria/">Trilha <b>Trigonometria</b> · etapa 3 de 4</a>
+      <nav aria-label="Trilha">
+        <span title="Em breve">← Razões trigonométricas<small>em breve</small></span>
+        <span title="Em breve">Ondas →<small>em breve</small></span>
+      </nav>
+    </div>
+    <div class="intro">
+      <div>
+        <p class="eyebrow">Projeto interativo</p>
+        <h1>Círculo <em>trigonométrico</em></h1>
+      </div>
+      <p>Monte o círculo com a turma, uma camada por vez. Use as setas do teclado (ou o passador de slides) para avançar e arraste o ponto P sobre a circunferência.</p>
+    </div>
+
+    <div class="lab">
+      <div class="stage glass">
+        <svg id="cv" viewBox="0 0 600 600" role="img" aria-label="Círculo trigonométrico interativo"></svg>
+      </div>
+
+      <aside class="panel glass" aria-live="polite">
+        <div class="pa">
+        <div class="count"><span id="stepNo">Etapa 1 de 12</span><span class="layers" id="modeTag"></span></div>
+        <h2 id="stepTitle"></h2>
+        <p class="txt" id="stepText"></p>
+        <div class="ask"><b>Pergunte à turma</b><span id="stepAsk"></span></div>
+
+        <div class="stepnav">
+          <button class="btn ghost" id="prev">← Voltar</button>
+          <button class="btn" id="next">Próxima →</button>
+        </div>
+        <div class="dots" id="dots"></div>
+        </div>
+        <div class="pb">
+        <div class="sep first"></div>
+        <div class="reads" id="reads"></div>
+        <div id="flag"></div>
+
+        <div class="sep"></div>
+        <div class="ctrls">
+          <label class="rng" id="angWrap">Ângulo θ
+            <input type="range" id="ang" min="0" max="360" step="1" value="40" aria-label="Ângulo em graus">
+          </label>
+          <div class="btns">
+            <button class="chip" id="spinBtn" aria-pressed="false">▶ Girar</button>
+            <button class="chip" id="snapBtn" aria-pressed="true">Ímã nos notáveis</button>
+            <button class="chip" id="wrapBtn">Enrolar o raio</button>
+            <button class="chip" id="qHalf">Q em (0,5; 0,5)</button>
+            <button class="chip" id="q68">Q em (0,8; 0,6)</button>
+            <button class="chip" id="qStick">Prender Q no círculo</button>
+          </div>
+          <details id="freeBox">
+            <summary>Modo livre: escolher as camadas</summary>
+            <div class="layerlist" id="layerList"></div>
+          </details>
+        </div>
+        <p class="hint">Teclado: ← → mudam a etapa · clique no círculo para mover P</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> divonei.com · conteúdo de livre acesso</span>
+    <span>Círculo trigonométrico em camadas</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  /* ================= dados das etapas ================= */
+  const STEPS = [
+    {t:'A circunferência de raio 1',
+     x:'Tudo começa com uma circunferência de centro na origem O e raio 1. Esse é o truque: com raio 1, as medidas que vamos ler nos eixos já serão os próprios valores de seno e cosseno.',
+     a:'Por que vocês acham que escolhemos raio 1, e não 5 ou 10?'},
+    {t:'Quadrantes e sentido',
+     x:'Os eixos dividem o círculo em quatro quadrantes, numerados no sentido anti-horário. Os ângulos começam no ponto A(1, 0) e crescem girando no sentido anti-horário.',
+     a:'Em que quadrante fica um ângulo de 100°? E um de 200°?'},
+    {t:'O ponto P',
+     x:'Cada ângulo θ marca um único ponto P sobre a circunferência. Arraste P (ou clique em qualquer lugar do círculo) e observe o ângulo mudar.',
+     a:'Para um mesmo ângulo, quantos pontos P diferentes existem?'},
+    {t:'Cosseno e seno são sombras',
+     x:'Projete P nos eixos. A sombra no eixo horizontal é o cosseno; a sombra no eixo vertical é o seno. Ou seja, as coordenadas de P são P = (cos θ, sen θ).',
+     a:'Para que ângulo o cosseno vale 0? E para qual o seno vale 1?'},
+    {t:'O triângulo escondido',
+     x:'O raio OP, a sombra no eixo x e o segmento vertical formam um triângulo retângulo de hipotenusa 1. Por isso sen θ = oposto ÷ 1 e cos θ = adjacente ÷ 1: é a mesma definição do triângulo retângulo.',
+     a:'Se a hipotenusa fosse 2, o que mudaria nos catetos? E no seno?'},
+    {t:'Seno e cosseno andam juntos',
+     x:'Como a hipotenusa é sempre 1, Pitágoras amarra os dois: cos²θ + sen²θ = 1. Escolhido um, o outro está decidido (a menos do sinal). O ponto livre Q mostra que nem todo par de números serve.',
+     a:'Coloque Q em (0,5; 0,5). Ele está no círculo? E existe ângulo com cos = 0,8 e sen = 0,6?'},
+    {t:'Ângulos notáveis',
+     x:'30°, 45° e 60°, e seus correspondentes nos outros quadrantes, têm valores exatos. Com o ímã ligado, P gruda nesses ângulos e o painel mostra a forma exata.',
+     a:'Por que sen 30° é igual a cos 60°?'},
+    {t:'Simetrias',
+     x:'Os valores de um ângulo do 1º quadrante se repetem, a menos do sinal, nos outros três: 180° − α, 180° + α e 360° − α. Basta conhecer o 1º quadrante.',
+     a:'Qual ângulo do 2º quadrante tem o mesmo seno de 30°?'},
+    {t:'Sinais em cada quadrante',
+     x:'O sinal do cosseno depende do lado (direita +, esquerda −). O sinal do seno depende da altura (acima +, abaixo −).',
+     a:'Em qual quadrante seno e cosseno são ambos negativos?'},
+    {t:'Tangente',
+     x:'Prolongue a reta OP até encontrar a reta x = 1 (o eixo das tangentes). A altura desse encontro é a tangente: tg θ = sen θ ÷ cos θ.',
+     a:'O que acontece com a tangente quando θ se aproxima de 90°?'},
+    {t:'Radianos',
+     x:'Um radiano é o ângulo cujo arco tem o mesmo tamanho do raio. Com raio 1, o comprimento do arco é a própria medida em radianos. Uma volta inteira tem 2π ≈ 6,28 raios.',
+     a:'Quantos raios cabem em meia volta? (Use "Enrolar o raio".)'},
+    {t:'Da volta à onda',
+     x:'Registre a altura de P (o seno) enquanto ele gira, avançando para a direita: surge a senoide. A onda é o círculo desenrolado.',
+     a:'Onde a onda atinge o ponto mais alto? Que ponto do círculo é esse?'},
+  ];
+  const LAYERS = [
+    {k:'quad', s:2,  n:'Quadrantes e sentido'},
+    {k:'ponto',s:3,  n:'Ponto P e ângulo θ'},
+    {k:'proj', s:4,  n:'Projeções: cos e sen'},
+    {k:'tri',  s:5,  n:'Triângulo retângulo'},
+    {k:'pit',  s:6,  n:'Pitágoras: cos² + sen² = 1'},
+    {k:'livre',s:6,  n:'Ponto livre Q', temp:true},
+    {k:'not',  s:7,  n:'Ângulos notáveis'},
+    {k:'sim',  s:8,  n:'Simetrias', temp:true},
+    {k:'sin',  s:9,  n:'Sinais por quadrante', temp:true},
+    {k:'tan',  s:10, n:'Tangente', temp:true},
+    {k:'rad',  s:11, n:'Radianos'},
+    {k:'onda', s:12, n:'Senoide'},
+  ];
+  const NOTAVEIS = [0,30,45,60,90,120,135,150,180,210,225,240,270,300,315,330,360];
+
+  /* ================= estado ================= */
+  let step = 1, free = false, on = new Set();
+  let th = 40, snap = true, spinning = false, wrapStart = null, drag = null;
+  let Q = {x:-.6, y:.35};
+
+  const $ = id => document.getElementById(id);
+  const svg = $('cv');
+  const R = 200, X = x => 300 + R*x, Y = y => 300 - R*y;
+  const rad = d => d*Math.PI/180;
+  const vis = k => {
+    if(free) return on.has(k);
+    const L = LAYERS.find(l => l.k === k);
+    return L.temp ? step === L.s : step >= L.s;
+  };
+  const f = (n, d=3) => (Math.abs(n) < .5*Math.pow(10,-d) ? 0 : n).toFixed(d).replace('.', ',').replace('-', '−');
+  const p2 = (x, y) => `${x.toFixed(1)} ${y.toFixed(1)}`;
+
+  /* valores exatos dos ângulos notáveis */
+  const EX = {0:['1','0','0'],30:['√3/2','1/2','√3/3'],45:['√2/2','√2/2','1'],60:['1/2','√3/2','√3'],90:['0','1','∄']};
+  function exact(d){
+    d = ((d % 360) + 360) % 360;
+    if(d % 30 && d % 45) return null;
+    let ref, sc, ss;
+    if(d <= 90){ ref = d; sc = 1; ss = 1; }
+    else if(d <= 180){ ref = 180-d; sc = -1; ss = 1; }
+    else if(d <= 270){ ref = d-180; sc = -1; ss = -1; }
+    else { ref = 360-d; sc = 1; ss = -1; }
+    const [c, s, t] = EX[ref];
+    const sg = (v, k) => (v === '0' || v === '∄' || k > 0) ? v : '−' + v;
+    return {c: sg(c, sc), s: sg(s, ss), t: sg(t, sc*ss)};
+  }
+  const gcd = (a, b) => b ? gcd(b, a % b) : a;
+  function piFrac(d){
+    if(d === 0) return '0';
+    const g = gcd(d, 180), p = d/g, q = 180/g;
+    if(q > 12) return null;
+    const num = p === 1 ? 'π' : p + 'π';
+    return q === 1 ? num : num + '/' + q;
+  }
+  function quadrant(d){
+    d = ((d % 360) + 360) % 360;
+    if(d % 90 === 0) return 'sobre um eixo';
+    return ['I','II','III','IV'][Math.floor(d/90)];
+  }
+
+  /* ================= desenho ================= */
+  const DEFS = `<defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="#2b241c"/></marker>
+    <marker id="arg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="#a86f1c"/></marker>
+    <clipPath id="clipC"><rect x="0" y="0" width="600" height="600"/></clipPath>
+  </defs>`;
+
+  function arc(rp, a1, a2, cls){   // arco anti-horário (graus) de raio rp em px
+    if(a2 - a1 >= 359.999){
+      return `<circle cx="300" cy="300" r="${rp}" ${cls}/>`;
+    }
+    const A = rad(a1), B = rad(a2);
+    return `<path d="M${p2(300+rp*Math.cos(A), 300-rp*Math.sin(A))} A${rp} ${rp} 0 ${(a2-a1) > 180 ? 1 : 0} 0 ${p2(300+rp*Math.cos(B), 300-rp*Math.sin(B))}" ${cls}/>`;
+  }
+  const txt = (x, y, s, cls='', anchor='middle', extra='') =>
+    `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" class="${cls}" text-anchor="${anchor}" dominant-baseline="middle" ${extra}>${s}</text>`;
+
+  function render(){
+    const onda = vis('onda');
+    svg.setAttribute('viewBox', onda ? '0 0 1120 600' : '0 0 600 600');
+    const t = rad(th), c = Math.cos(t), s = Math.sin(t);
+    const cz = Math.abs(c) < 1e-9 ? 0 : c, sz = Math.abs(s) < 1e-9 ? 0 : s;
+    const px = X(cz), py = Y(sz);
+    let g = DEFS;
+
+    /* sinais: tinta leve em cada quadrante */
+    if(vis('sin')){
+      const Qd = [[1,1,'rgba(58,165,138,.10)','cos +','sen +'],[-1,1,'rgba(240,150,60,.10)','cos −','sen +'],
+                  [-1,-1,'rgba(207,74,54,.09)','cos −','sen −'],[1,-1,'rgba(59,120,200,.09)','cos +','sen −']];
+      for(const [qx, qy, col, a, b] of Qd){
+        const x0 = qx > 0 ? 300 : 300 - 1.3*R, y0 = qy > 0 ? 300 - 1.3*R : 300;
+        g += `<rect x="${x0}" y="${y0}" width="${1.3*R}" height="${1.3*R}" fill="${col}"/>`;
+        const lx = X(qx*1.08), ly = Y(qy*1.18);
+        const an = qx > 0 ? 'end' : 'start';
+        g += txt(lx, ly - 9, a, 'c b sm halo', an) + txt(lx, ly + 9, b, 's b sm halo', an);
+      }
+    }
+
+    /* base: eixos e circunferência */
+    g += `<circle cx="300" cy="300" r="${R}" fill="rgba(255,252,246,.4)" stroke="#2b241c" stroke-width="2.2"/>`;
+    g += `<line x1="${X(-1.4)}" y1="300" x2="${X(1.4)}" y2="300" stroke="#2b241c" stroke-width="1.3" marker-end="url(#ar)"/>`;
+    g += `<line x1="300" y1="${Y(-1.4)}" x2="300" y2="${Y(1.4)}" stroke="#2b241c" stroke-width="1.3" marker-end="url(#ar)"/>`;
+    g += txt(X(1.42), 318, 'x', 'm', 'start') + txt(316, Y(1.42), 'y', 'm', 'start');
+    g += txt(288, 316, 'O', 'm', 'end');
+    if(!vis('not')){
+      g += txt(X(1)+8, 316, '1', 'sm', 'start') + txt(X(-1)-6, 316, '−1', 'sm', 'end');
+      g += txt(288, Y(1)-12, '1', 'sm', 'end') + txt(288, Y(-1)+14, '−1', 'sm', 'end');
+    }
+    if(!vis('ponto')){   // raio de exemplo
+      const a = rad(35);
+      g += `<line x1="300" y1="300" x2="${X(Math.cos(a))}" y2="${Y(Math.sin(a))}" stroke="#a86f1c" stroke-width="3" stroke-linecap="round"/>`;
+      g += `<circle cx="${X(Math.cos(a))}" cy="${Y(Math.sin(a))}" r="4" fill="#a86f1c"/>`;
+      g += txt(X(.5*Math.cos(a)) - 8, Y(.5*Math.sin(a)) - 14, 'r = 1', 'g b halo');
+    }
+
+    /* quadrantes e sentido */
+    if(vis('quad')){
+      g += txt(X(.55), Y(.55), 'I', 'q') + txt(X(-.55), Y(.55), 'II', 'q') + txt(X(-.55), Y(-.55), 'III', 'q') + txt(X(.55), Y(-.55), 'IV', 'q');
+      g += arc(1.33*R, 62, 112, 'fill="none" stroke="#a86f1c" stroke-width="2" marker-end="url(#arg)"');
+      g += txt(X(-1.02), Y(1.06), 'sentido positivo', 'g sm halo b', 'middle') + txt(X(-1.02), Y(.98), '(anti-horário)', 'g sm halo', 'middle');
+      g += `<circle cx="${X(1)}" cy="300" r="5" fill="#a86f1c"/>`;
+      g += txt(X(1)+8, 286, 'A', 'm g', 'start');
+    }
+
+    /* ângulos notáveis */
+    if(vis('not')){
+      for(const d of NOTAVEIS.slice(0, 16)){
+        const a = rad(d), ca = Math.cos(a), sa = Math.sin(a);
+        g += `<line x1="${X(.95*ca)}" y1="${Y(.95*sa)}" x2="${X(1.05*ca)}" y2="${Y(1.05*sa)}" stroke="#2b241c" stroke-width="1.4"/>`;
+        const lab = vis('rad') ? piFrac(d) : d + '°';
+        const an = Math.abs(ca) < .2 ? 'middle' : (ca > 0 ? 'start' : 'end');
+        g += txt(X(1.13*ca), Y(1.13*sa), lab, 'sm halo', an);
+      }
+    }
+
+    /* radianos: marcas de 1 a 6 rad, arco percorrido e o raio enrolando */
+    if(vis('rad')){
+      for(let k = 1; k <= 6; k++){
+        const ca = Math.cos(k), sa = Math.sin(k);
+        g += `<line x1="${X(.93*ca)}" y1="${Y(.93*sa)}" x2="${X(1.0*ca)}" y2="${Y(1.0*sa)}" stroke="#a86f1c" stroke-width="2.4"/>`;
+        g += txt(X(.85*ca), Y(.85*sa), k, 'g sm b halo');
+      }
+      if(vis('ponto') && th > 0) g += arc(R, 0, th, 'fill="none" stroke="#a86f1c" stroke-width="5" stroke-linecap="round" opacity=".55"');
+      if(wrapStart !== null){
+        const tt = Math.min(1, (performance.now() - wrapStart) / 1800);
+        const e = tt < .5 ? 2*tt*tt : 1 - Math.pow(-2*tt + 2, 2)/2;
+        let d = '';
+        for(let i = 0; i <= 40; i++){
+          const u = i/40;
+          const x = (1-e)*1 + e*Math.cos(u), y = (1-e)*u + e*Math.sin(u);
+          d += (i ? 'L' : 'M') + p2(X(x), Y(y));
+        }
+        g += `<line x1="300" y1="300" x2="${X(1)}" y2="300" stroke="#a86f1c" stroke-width="2" stroke-dasharray="5 5"/>`;
+        g += `<path d="${d}" fill="none" stroke="#a86f1c" stroke-width="6" stroke-linecap="round"/>`;
+        if(tt >= 1){
+          g += `<line x1="300" y1="300" x2="${X(Math.cos(1))}" y2="${Y(Math.sin(1))}" stroke="#a86f1c" stroke-width="2" stroke-dasharray="5 5"/>`;
+          g += arc(30, 0, 180/Math.PI, 'fill="none" stroke="#a86f1c" stroke-width="2"');
+          g += txt(X(.32), Y(.2), '1 rad', 'g b halo');
+        } else {
+          g += txt(X(1.06), Y(.5), 'raio = 1', 'g b halo', 'start');
+        }
+      }
+    }
+
+    /* simetrias */
+    if(vis('sim') && vis('ponto')){
+      const d = ((th % 360) + 360) % 360;
+      let al = d <= 90 ? d : d <= 180 ? 180 - d : d <= 270 ? d - 180 : 360 - d;
+      const angs = [al, 180 - al, 180 + al, 360 - al];
+      const ca = Math.cos(rad(al)), sa = Math.sin(rad(al));
+      g += `<rect x="${X(-ca)}" y="${Y(sa)}" width="${2*R*ca}" height="${2*R*sa}" fill="none" stroke="#a86f1c" stroke-width="1.4" stroke-dasharray="6 6"/>`;
+      angs.forEach((a, i) => {
+        const x = X(Math.cos(rad(a))), y = Y(Math.sin(rad(a)));
+        g += `<line x1="300" y1="300" x2="${x}" y2="${y}" stroke="#a86f1c" stroke-width="1.2" opacity=".6"/>`;
+        g += `<circle cx="${x}" cy="${y}" r="6" fill="#fff" stroke="#a86f1c" stroke-width="2.5"/>`;
+        const lab = ['α','180° − α','180° + α','360° − α'][i] + ' = ' + Math.round(a) + '°';
+        const lx = X(.62*Math.cos(rad(a))), ly = Y(.62*Math.sin(rad(a)));
+        g += txt(lx, ly + (Math.sin(rad(a)) >= 0 ? -10 : 10), lab, 'g sm b halo');
+      });
+    }
+
+    /* tangente */
+    if(vis('tan') && vis('ponto')){
+      g += `<g clip-path="url(#clipC)">`;
+      g += `<line x1="${X(1)}" y1="${Y(-1.5)}" x2="${X(1)}" y2="${Y(1.5)}" stroke="#3aa58a" stroke-width="1.6" stroke-dasharray="4 5"/>`;
+      if(Math.abs(cz) > 1e-6){
+        const tv = sz/cz;
+        g += `<line x1="${X(-3*c)}" y1="${Y(-3*s)}" x2="${X(3*c)}" y2="${Y(3*s)}" stroke="#3aa58a" stroke-width="1.3" opacity=".75"/>`;
+        const tc = Math.max(-1.48, Math.min(1.48, tv));
+        g += `<line x1="${X(1)}" y1="300" x2="${X(1)}" y2="${Y(tc)}" stroke="#3aa58a" stroke-width="5" stroke-linecap="round"/>`;
+        if(Math.abs(tv) <= 1.48) g += `<circle cx="${X(1)}" cy="${Y(tv)}" r="6" fill="#3aa58a"/>` + txt(X(1)+12, Y(tv), 'T', 'm t', 'start');
+        g += txt(X(1)+12, Y(tc/2), 'tg θ', 't b halo', 'start');
+      } else {
+        g += txt(X(1)+10, Y(1.3), 'tg θ não existe', 't b halo', 'start');
+      }
+      g += txt(X(1)+6, Y(-1.42), 'x = 1', 't sm', 'start');
+      g += `</g>`;
+    }
+
+    /* triângulo retângulo */
+    if(vis('tri') && vis('ponto')){
+      g += `<polygon points="300,300 ${px},300 ${px},${py}" fill="rgba(168,111,28,.13)"/>`;
+      if(Math.abs(cz) > .06 && Math.abs(sz) > .06){
+        const dx = cz > 0 ? -12 : 12, dy = sz > 0 ? -12 : 12;
+        g += `<path d="M${px+dx} 300 L${px+dx} ${300+dy} L${px} ${300+dy}" fill="none" stroke="#2b241c" stroke-width="1.3"/>`;
+      }
+      g += `<line x1="${px}" y1="300" x2="${px}" y2="${py}" stroke="#cf4a36" stroke-width="4" stroke-linecap="round"/>`;
+      const mx = X(cz/2), my = Y(sz/2), nx = -sz, ny = cz;
+      g += txt(mx + 16*nx, my - 16*ny, '1', 'm b halo');
+    }
+
+    /* projeções: cos e sen */
+    if(vis('proj') && vis('ponto')){
+      g += `<line x1="${px}" y1="${py}" x2="${px}" y2="300" stroke="#2b241c" stroke-width="1.2" stroke-dasharray="4 4" opacity=".6"/>`;
+      g += `<line x1="${px}" y1="${py}" x2="300" y2="${py}" stroke="#2b241c" stroke-width="1.2" stroke-dasharray="4 4" opacity=".6"/>`;
+      g += `<line x1="300" y1="300" x2="${px}" y2="300" stroke="#3b78c8" stroke-width="6" stroke-linecap="round"/>`;
+      g += `<line x1="300" y1="300" x2="300" y2="${py}" stroke="#cf4a36" stroke-width="6" stroke-linecap="round"/>`;
+      g += `<circle cx="${px}" cy="300" r="4.5" fill="#3b78c8"/><circle cx="300" cy="${py}" r="4.5" fill="#cf4a36"/>`;
+      const cy = sz >= 0 ? 324 : 278;
+      g += txt(X(cz/2), cy, 'cos θ', 'c b halo');
+      const sx = cz >= 0 ? 290 : 310, an = cz >= 0 ? 'end' : 'start';
+      g += txt(sx, Y(sz/2), 'sen θ', 's b halo', an);
+    }
+
+    /* ponto P e ângulo */
+    if(vis('ponto')){
+      if(th > 0) g += arc(44, 0, th, 'fill="rgba(168,111,28,.12)" stroke="#a86f1c" stroke-width="2"').replace('<path d="M', `<path d="M300 300 L`).replace(/" fill=/, ' Z" fill=');
+      const ma = rad(th/2);
+      g += txt(300 + 62*Math.cos(ma), 300 - 62*Math.sin(ma), 'θ', 'm g halo');
+      g += `<line x1="300" y1="300" x2="${px}" y2="${py}" stroke="#2b241c" stroke-width="2.6" stroke-linecap="round"/>`;
+      g += `<circle cx="${px}" cy="${py}" r="20" fill="transparent" data-drag="P" style="cursor:grab"/>`;
+      g += `<circle cx="${px}" cy="${py}" r="8" fill="#a86f1c" stroke="#fff" stroke-width="2.5" pointer-events="none"/>`;
+      if(vis('not')){
+        g += txt(X(1.27*c), Y(1.27*s), 'P', 'm b halo');
+      } else {
+        let lab = 'P';
+        if(vis('proj')) lab += ` (${f(cz,2)}; ${f(sz,2)})`;
+        const an = Math.abs(c) < .25 ? 'middle' : (c > 0 ? 'start' : 'end');
+        const dy = Math.abs(c) < .25 ? (s >= 0 ? -16 : 16) : (s >= 0 ? -10 : 10);
+        g += txt(X(1.07*c), Y(1.07*s) + dy, lab, 'm b halo', an);
+      }
+    }
+
+    /* ponto livre Q */
+    if(vis('livre')){
+      const qx = X(Q.x), qy = Y(Q.y), d = Math.hypot(Q.x, Q.y);
+      const st = Math.abs(d - 1) < .01 ? 'ok' : 'no';
+      g += `<line x1="300" y1="300" x2="${qx}" y2="${qy}" stroke="#5c5245" stroke-width="1.4" stroke-dasharray="3 5"/>`;
+      if(st === 'no'){   // onde o raio na direção de Q encontra o círculo
+        const ux = Q.x/(d||1), uy = Q.y/(d||1);
+        g += `<circle cx="${X(ux)}" cy="${Y(uy)}" r="4" fill="none" stroke="#5c5245" stroke-width="1.5"/>`;
+      }
+      g += `<circle cx="${qx}" cy="${qy}" r="20" fill="transparent" data-drag="Q" style="cursor:grab"/>`;
+      g += `<rect x="${qx-8}" y="${qy-8}" width="16" height="16" transform="rotate(45 ${qx} ${qy})" fill="${st === 'ok' ? '#3aa58a' : '#fff'}" stroke="#2b241c" stroke-width="2.2" pointer-events="none"/>`;
+      let qa = Math.atan2(Q.y, Q.x)*180/Math.PI; if(qa < 0) qa += 360;
+      let diff = ((qa - th + 540) % 360) - 180;          // >0: Q está "à frente" de P
+      const left = vis('ponto') ? (Q.y >= 0 ? diff > 0 : diff < 0) : Q.x < 0;
+      const an = left ? 'end' : 'start', dx = left ? -16 : 16;
+      g += txt(qx + dx, qy - 12, `Q (${f(Q.x,2)}; ${f(Q.y,2)})`, 'm halo', an);
+      g += txt(qx + dx, qy + 12, `distância até O = ${f(d,3)}`, 'sm halo b', an);
+    }
+
+    /* senoide */
+    if(onda){
+      const x0 = 580, k = 500/(2*Math.PI);
+      g += `<line x1="${x0-10}" y1="300" x2="${x0+530}" y2="300" stroke="#2b241c" stroke-width="1.3" marker-end="url(#ar)"/>`;
+      g += `<line x1="${x0}" y1="${Y(-1.3)}" x2="${x0}" y2="${Y(1.35)}" stroke="#2b241c" stroke-width="1.3" marker-end="url(#ar)"/>`;
+      g += txt(x0 + 528, 320, 'θ', 'm', 'end') + txt(x0 + 10, Y(1.38), 'y = sen θ', 's b', 'start');
+      [1,-1].forEach(v => {
+        g += `<line x1="${x0}" y1="${Y(v)}" x2="${x0+500}" y2="${Y(v)}" stroke="#2b241c" stroke-width="1" stroke-dasharray="3 6" opacity=".35"/>`;
+        g += txt(x0 - 8, Y(v), v > 0 ? '1' : '−1', 'sm', 'end');
+      });
+      ['π/2','π','3π/2','2π'].forEach((l, i) => {
+        const x = x0 + k*Math.PI/2*(i+1);
+        g += `<line x1="${x}" y1="295" x2="${x}" y2="305" stroke="#2b241c" stroke-width="1.3"/>`;
+        g += txt(x, 320, l, 'sm');
+      });
+      let full = '', part = '';
+      for(let i = 0; i <= 200; i++){
+        const a = i/200*2*Math.PI;
+        full += (i ? 'L' : 'M') + p2(x0 + k*a, Y(Math.sin(a)));
+      }
+      const tr = rad(th), n = Math.max(1, Math.round(th/2));
+      for(let i = 0; i <= n; i++){
+        const a = i/n*tr;
+        part += (i ? 'L' : 'M') + p2(x0 + k*a, Y(Math.sin(a)));
+      }
+      g += `<path d="${full}" fill="none" stroke="#cf4a36" stroke-width="1.5" stroke-dasharray="4 6" opacity=".4"/>`;
+      g += `<path d="${part}" fill="none" stroke="#cf4a36" stroke-width="3.4" stroke-linecap="round"/>`;
+      const wx = x0 + k*tr, wy = Y(sz);
+      g += `<line x1="${px}" y1="${py}" x2="${wx}" y2="${wy}" stroke="#a86f1c" stroke-width="1.4" stroke-dasharray="5 5"/>`;
+      g += `<line x1="${wx}" y1="300" x2="${wx}" y2="${wy}" stroke="#cf4a36" stroke-width="2" opacity=".5"/>`;
+      g += `<circle cx="${wx}" cy="${wy}" r="20" fill="transparent" data-drag="W" style="cursor:grab"/>`;
+      g += `<circle cx="${wx}" cy="${wy}" r="7" fill="#cf4a36" stroke="#fff" stroke-width="2.5" pointer-events="none"/>`;
+    }
+
+    svg.innerHTML = g;
+  }
+
+  /* ================= painel ================= */
+  function readouts(){
+    let h = '';
+    const t = rad(th), c = Math.cos(t), s = Math.sin(t), ex = exact(th);
+    const row = (cls, a, b) => `<div class="row ${cls}"><span>${a}</span><b>${b}</b></div>`;
+    if(vis('ponto')){
+      h += row('g big', 'Ângulo θ', th + '°');
+      if(vis('rad')){
+        const pf = piFrac(th);
+        h += row('g', 'em radianos', (pf && pf !== '0' ? pf + ' ≈ ' : '') + f(t) + ' rad');
+      }
+      if(vis('quad')) h += row('', 'Quadrante', quadrant(th));
+    }
+    if(vis('proj') && vis('ponto')){
+      const ec = ex && vis('not') ? ex.c + (ex.c.includes('√') ? ' ≈ ' + f(c) : '') : f(c);
+      const es = ex && vis('not') ? ex.s + (ex.s.includes('√') ? ' ≈ ' + f(s) : '') : f(s);
+      h += row('c big', 'cos θ', ec) + row('s big', 'sen θ', es);
+    }
+    if(vis('tan') && vis('ponto')){
+      const tz = Math.abs(c) < 1e-9;
+      const et = tz ? 'não existe' : (ex && vis('not') ? ex.t + (ex.t.includes('√') ? ' ≈ ' + f(s/c) : '') : f(s/c));
+      h += row('t big', 'tg θ', et);
+    }
+    if(vis('pit') && vis('ponto')){
+      h += row('', 'cos²θ + sen²θ', `${f(c*c)} + ${f(s*s)} = <span style="color:var(--gold)">${f(c*c + s*s)}</span>`);
+    }
+    $('reads').innerHTML = h;
+
+    let fl = '';
+    if(vis('livre')){
+      const d = Math.hypot(Q.x, Q.y), x2 = Q.x*Q.x, y2 = Q.y*Q.y;
+      const where = Math.abs(d - 1) < .01 ? 'sobre o círculo' : d < 1 ? 'dentro do círculo' : 'fora do círculo';
+      const ok = Math.abs(d - 1) < .01;
+      fl = `<div class="flag ${ok ? 'ok' : 'no'}"><b>Q está ${where}.</b><br>x² + y² = ${f(x2,4)} + ${f(y2,4)} = ${f(x2 + y2,4)} ${ok ? '= 1 ✓' : '≠ 1'}<br>${ok ? 'Então existe um ângulo com cos = ' + f(Q.x,2) + ' e sen = ' + f(Q.y,2) + '.' : 'Nenhum ângulo tem cos = ' + f(Q.x,2) + ' e sen = ' + f(Q.y,2) + ' ao mesmo tempo.'}</div>`;
+    }
+    $('flag').innerHTML = fl;
+  }
+
+  function controls(){
+    const show = (id, v) => { $(id).style.display = v ? '' : 'none'; };
+    show('angWrap', vis('ponto')); show('spinBtn', vis('ponto'));
+    show('snapBtn', vis('not')); show('wrapBtn', vis('rad'));
+    show('qHalf', vis('livre')); show('q68', vis('livre')); show('qStick', vis('livre'));
+    $('ang').value = th;
+  }
+
+  function panel(){
+    const S = STEPS[step - 1];
+    $('stepNo').textContent = `Etapa ${step} de ${STEPS.length}`;
+    $('stepTitle').textContent = S.t;
+    $('stepText').textContent = S.x;
+    $('stepAsk').textContent = S.a;
+    $('prev').disabled = step === 1;
+    $('next').disabled = step === STEPS.length;
+    $('next').textContent = step === STEPS.length ? 'Fim' : 'Próxima →';
+    $('modeTag').textContent = free ? 'modo livre' : '';
+    [...$('dots').children].forEach((b, i) => {
+      b.className = i + 1 === step ? 'on' : (i + 1 < step ? 'done' : '');
+      b.setAttribute('aria-current', i + 1 === step ? 'step' : 'false');
+    });
+    syncChecks();
+  }
+
+  function update(){ render(); readouts(); controls(); document.querySelector('.lab').classList.toggle('wide', vis('onda')); }
+  function goStep(n){
+    step = Math.max(1, Math.min(STEPS.length, n));
+    if(free){ free = false; $('freeBox').open = false; }
+    wrapStart = null;
+    if(step === 7) th = snapTo(th);
+    panel(); update();
+  }
+
+  /* lista de camadas (modo livre) */
+  $('layerList').innerHTML = LAYERS.map(l => `<label><input type="checkbox" data-k="${l.k}"> ${l.n}</label>`).join('');
+  function syncChecks(){
+    $('layerList').querySelectorAll('input').forEach(i => { i.checked = vis(i.dataset.k); });
+  }
+  $('layerList').addEventListener('change', e => {
+    const k = e.target.dataset.k; if(!k) return;
+    if(!free){ free = true; on = new Set(LAYERS.filter(l => vis(l.k)).map(l => l.k)); }
+    e.target.checked ? on.add(k) : on.delete(k);
+    panel(); update();
+  });
+
+  $('dots').innerHTML = STEPS.map((s, i) => `<button title="${s.t}" aria-label="Etapa ${i+1}: ${s.t}">${i+1}</button>`).join('');
+  $('dots').addEventListener('click', e => { const b = e.target.closest('button'); if(b) goStep([...$('dots').children].indexOf(b) + 1); });
+  $('prev').onclick = () => goStep(step - 1);
+  $('next').onclick = () => goStep(step + 1);
+
+  /* ================= interação ================= */
+  function snapTo(a){
+    if(!(snap && vis('not'))) return a;
+    for(const n of NOTAVEIS) if(Math.abs(a - n) <= 4) return n % 360 === 0 && a > 180 ? 0 : n % 360;
+    return a;
+  }
+  function pt(e){
+    const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
+    return p.matrixTransform(svg.getScreenCTM().inverse());
+  }
+  function setFromCircle(p){
+    let a = Math.atan2(300 - p.y, p.x - 300) * 180/Math.PI;
+    if(a < 0) a += 360;
+    th = snapTo(Math.round(a) % 360);
+  }
+  function setFromWave(p){
+    const k = 500/(2*Math.PI);
+    let a = (p.x - 580)/k * 180/Math.PI;
+    th = snapTo(Math.max(0, Math.min(360, Math.round(a))));
+    if(th === 0 && a > 180) th = 360;
+  }
+  function setQ(p){
+    const r = v => Math.round(v*20)/20;
+    Q = {x: Math.max(-1.4, Math.min(1.4, r((p.x - 300)/R))), y: Math.max(-1.4, Math.min(1.4, r((300 - p.y)/R)))};
+  }
+  function apply(p){
+    if(drag === 'P') setFromCircle(p);
+    else if(drag === 'W') setFromWave(p);
+    else if(drag === 'Q') setQ(p);
+    update();
+  }
+  svg.addEventListener('pointerdown', e => {
+    const p = pt(e), tg = e.target.closest('[data-drag]');
+    if(tg) drag = tg.dataset.drag;
+    else if(vis('onda') && p.x > 570) drag = 'W';
+    else if(vis('ponto') && p.x < 600) drag = 'P';
+    else return;
+    stopSpin();
+    svg.setPointerCapture(e.pointerId);
+    e.preventDefault();
+    apply(p);
+  });
+  svg.addEventListener('pointermove', e => { if(drag) apply(pt(e)); });
+  const end = () => { drag = null; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  $('ang').addEventListener('input', e => { stopSpin(); th = +e.target.value; render(); readouts(); });
+
+  function stopSpin(){ spinning = false; $('spinBtn').setAttribute('aria-pressed','false'); $('spinBtn').textContent = '▶ Girar'; }
+  $('spinBtn').onclick = () => {
+    spinning = !spinning;
+    $('spinBtn').setAttribute('aria-pressed', spinning);
+    $('spinBtn').textContent = spinning ? '❚❚ Pausar' : '▶ Girar';
+    if(spinning) requestAnimationFrame(spinLoop);
+  };
+  function spinLoop(){
+    if(!spinning) return;
+    th = vis('onda') ? (th >= 360 ? 0 : th + 1) : (th + 1) % 360;
+    update();
+    requestAnimationFrame(spinLoop);
+  }
+  $('snapBtn').onclick = () => { snap = !snap; $('snapBtn').setAttribute('aria-pressed', snap); if(snap){ th = snapTo(th); update(); } };
+  $('wrapBtn').onclick = () => {
+    wrapStart = performance.now();
+    const loop = () => { render(); if(wrapStart !== null && performance.now() - wrapStart < 1900) requestAnimationFrame(loop); };
+    loop();
+  };
+  $('qHalf').onclick = () => { Q = {x:.5, y:.5}; update(); };
+  $('q68').onclick = () => { Q = {x:.8, y:.6}; update(); };
+  $('qStick').onclick = () => {
+    const d = Math.hypot(Q.x, Q.y) || 1;
+    Q = {x: Q.x/d, y: Q.y/d};
+    update();
+  };
+
+  document.addEventListener('keydown', e => {
+    if(e.target.matches('input, textarea')) return;
+    if(['ArrowRight','PageDown',' '].includes(e.key)){ e.preventDefault(); goStep(step + 1); }
+    else if(['ArrowLeft','PageUp'].includes(e.key)){ e.preventDefault(); goStep(step - 1); }
+  });
+
+  $('projBtn').onclick = () => {
+    const o = document.body.classList.toggle('proj');
+    $('projBtn').setAttribute('aria-pressed', o);
+  };
+  $('fsBtn').onclick = () => {
+    try{
+      if(document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen?.()?.catch?.(() => {});
+    }catch(e){}
+  };
+  $('year').textContent = new Date().getFullYear();
+
+  panel(); update();
+})();
+</script>
+</body>
+</html>

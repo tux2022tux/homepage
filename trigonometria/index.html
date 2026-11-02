@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trilha de Trigonometria — divonei.com</title>
+<meta name="description" content="Do triângulo retângulo à onda: uma trilha de páginas interativas para aprender trigonometria em ordem.">
+<meta name="theme-color" content="#f2ece1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f2ece1'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%232b241c' stroke-width='1.5'/%3E%3Cpath d='M16 16 L23.5 9.5 M23.5 9.5 V16 M16 16 H23.5' fill='none' stroke='%23a86f1c' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f2ece1; --ink:#2b241c; --ink-soft:#5c5245; --ink-mute:#8b806f; --gold:#a86f1c;
+    --line:rgba(43,36,28,.12);
+    --glass-bg:rgba(255,252,246,.48); --glass-bg-strong:rgba(250,246,238,.80);
+    --glass-border:rgba(255,255,255,.75); --glass-hi:rgba(255,255,255,.55);
+    --glass-shadow:0 24px 50px -28px rgba(80,55,20,.35);
+    --serif:"Fraunces", Georgia, serif; --sans:"Instrument Sans", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+  .glass{background:linear-gradient(135deg,var(--glass-hi),transparent 40%),var(--glass-bg);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow), inset 0 1px 0 var(--glass-hi)}
+  .orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .orbs i{position:absolute;border-radius:50%;filter:blur(80px)}
+  .orbs i:nth-child(1){width:46vw;height:46vw;left:-10vw;top:10vh;background:rgba(70,130,210,.24);animation:drift 26s ease-in-out infinite}
+  .orbs i:nth-child(2){width:38vw;height:38vw;right:-8vw;top:30vh;background:rgba(240,150,60,.26);animation:drift 32s ease-in-out infinite reverse}
+  .orbs i:nth-child(3){width:30vw;height:30vw;left:30vw;bottom:-10vh;background:rgba(80,175,140,.20);animation:drift 38s ease-in-out infinite}
+  .orbs i:nth-child(4){width:24vw;height:24vw;right:22vw;top:-6vh;background:rgba(215,80,60,.18);animation:drift 30s ease-in-out infinite reverse}
+  @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(6vw,-4vh) scale(1.08)}66%{transform:translate(-4vw,5vh) scale(.95)}}
+
+  header.top{position:fixed;inset:0 0 auto 0;z-index:10;background:var(--glass-bg-strong);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid var(--glass-border)}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{font-family:var(--serif);font-size:1.4rem;text-decoration:none;letter-spacing:-.01em}
+  .brand span{color:var(--gold)}
+  .chip{border:1px solid rgba(43,36,28,.15);background:rgba(255,252,246,.6);padding:7px 14px;border-radius:999px;font-size:.86rem;color:var(--ink-soft);text-decoration:none}
+  .chip:hover{background:#fff;color:var(--ink)}
+
+  main{position:relative;z-index:1;padding:130px 0 60px}
+  .eyebrow{font-size:.76rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.6rem,6vw,4.6rem);line-height:1;letter-spacing:-.025em}
+  h1 em{font-style:italic;color:var(--gold)}
+  .lead{margin-top:20px;font-size:1.13rem;color:var(--ink-soft);max-width:52ch}
+
+  /* o caminho */
+  .path{position:relative;margin-top:70px;display:grid;gap:26px}
+  .path::before{content:"";position:absolute;left:39px;top:40px;bottom:40px;border-left:2px dashed rgba(168,111,28,.45)}
+  .stop{position:relative;display:grid;grid-template-columns:80px 1fr;gap:22px;align-items:center}
+  .badge{width:80px;height:80px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-size:1.9rem;font-weight:300;z-index:1;background:var(--bg);border:2px solid rgba(168,111,28,.45);color:var(--gold)}
+  .stop.ready .badge{background:var(--gold);color:#fff;border-color:var(--gold)}
+  .card{display:grid;grid-template-columns:1fr 200px;gap:20px;align-items:center;border-radius:22px;padding:22px 26px;text-decoration:none;transition:transform .25s}
+  a.card:hover{transform:translateY(-3px)}
+  .card .tag{display:inline-block;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--ink-mute)}
+  .card .tag.live{border-color:rgba(168,111,28,.5);color:var(--gold)}
+  .card h2{font-family:var(--serif);font-weight:400;font-size:1.55rem;margin:8px 0 4px;letter-spacing:-.01em}
+  .card .q{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:1.05rem}
+  .card p{color:var(--ink-soft);font-size:.95rem;margin-top:6px}
+  .card .go{display:inline-flex;gap:8px;align-items:center;margin-top:12px;color:var(--gold);font-weight:500;font-size:.92rem}
+  .card svg.art{width:100%;height:auto}
+  .stop:not(.ready) .card{opacity:.78}
+  .bridge{margin:-8px 0 -8px 102px;font-size:.86rem;color:var(--ink-mute);font-style:italic}
+
+  .note{margin-top:60px;border-radius:22px;padding:26px 28px;color:var(--ink-soft);font-size:.98rem}
+  .note b{font-family:var(--serif);font-weight:400;font-style:italic;color:var(--ink);font-size:1.15rem;display:block;margin-bottom:6px}
+
+  footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:30px 0;color:var(--ink-mute);font-size:.84rem}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+  @media (max-width:760px){
+    .wrap{padding:0 16px}
+    .path::before{left:25px}
+    .stop{grid-template-columns:52px 1fr;gap:12px}
+    .badge{width:52px;height:52px;font-size:1.4rem}
+    .card{grid-template-columns:1fr;padding:20px}
+    .card svg.art{max-width:220px}
+    .bridge{margin-left:64px}
+  }
+  @media (prefers-reduced-motion:reduce){ .orbs i{animation:none} }
+</style>
+</head>
+<body>
+<div class="orbs" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/">divonei<span>.</span>com</a>
+    <a class="chip" href="/#projetos">Projetos</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="eyebrow">Trilha</p>
+    <h1>Trigono<em>metria</em></h1>
+    <p class="lead">Do triângulo retângulo à onda, um passo de cada vez. Cada página responde a uma pergunta e termina onde a próxima começa.</p>
+
+    <div class="path">
+
+      <div class="stop ready">
+        <div class="badge">1</div>
+        <a class="card glass" href="/triangulo-mestre/">
+          <div>
+            <span class="tag live">Disponível</span>
+            <h2>Triângulo Mestre</h2>
+            <p class="q">Que relações existem entre os lados do triângulo retângulo?</p>
+            <p>Altura, projeções e Pitágoras: arraste, meça e descubra por que h² = m·n.</p>
+            <span class="go">Abrir →</span>
+          </div>
+          <svg class="art" viewBox="0 0 200 120" aria-hidden="true">
+            <polygon points="20,100 180,100 70,30" fill="rgba(168,111,28,.1)" stroke="#2b241c" stroke-width="1.6"/>
+            <line x1="70" y1="30" x2="70" y2="100" stroke="#a86f1c" stroke-width="1.6" stroke-dasharray="4 4"/>
+            <path d="M70 92h8v8" fill="none" stroke="#a86f1c" stroke-width="1.2"/>
+            <text x="76" y="70" font-family="Fraunces,serif" font-style="italic" font-size="14" fill="#a86f1c">h</text>
+          </svg>
+        </a>
+      </div>
+      <p class="bridge">↓ de lados para ângulos</p>
+
+      <div class="stop">
+        <div class="badge">2</div>
+        <div class="card glass">
+          <div>
+            <span class="tag">Em breve</span>
+            <h2>Razões trigonométricas</h2>
+            <p class="q">Por que o seno depende só do ângulo?</p>
+            <p>Oposto, adjacente e hipotenusa; triângulos semelhantes guardam a mesma razão.</p>
+          </div>
+          <svg class="art" viewBox="0 0 200 120" aria-hidden="true">
+            <polygon points="20,100 170,100 170,25" fill="rgba(168,111,28,.06)" stroke="#2b241c" stroke-width="1.2" opacity=".45"/>
+            <polygon points="20,100 110,100 110,55" fill="rgba(168,111,28,.12)" stroke="#2b241c" stroke-width="1.6"/>
+            <line x1="110" y1="55" x2="110" y2="100" stroke="#cf4a36" stroke-width="3"/>
+            <path d="M44 100 A24 24 0 0 0 41.5 89.3" fill="none" stroke="#a86f1c" stroke-width="1.6"/>
+            <text x="48" y="95" font-family="Fraunces,serif" font-style="italic" font-size="13" fill="#a86f1c">α</text>
+          </svg>
+        </div>
+      </div>
+      <p class="bridge">↓ hipotenusa = 1</p>
+
+      <div class="stop ready">
+        <div class="badge">3</div>
+        <a class="card glass" href="/circulo-trigonometrico/">
+          <div>
+            <span class="tag live">Disponível</span>
+            <h2>Círculo trigonométrico</h2>
+            <p class="q">Como levar seno e cosseno para qualquer ângulo?</p>
+            <p>Montado em 12 camadas com a turma: projeções, Pitágoras, notáveis, simetrias, tangente e radianos.</p>
+            <span class="go">Abrir →</span>
+          </div>
+          <svg class="art" viewBox="0 0 200 120" aria-hidden="true">
+            <line x1="40" y1="60" x2="160" y2="60" stroke="#2b241c" stroke-width="1"/>
+            <line x1="100" y1="5" x2="100" y2="115" stroke="#2b241c" stroke-width="1"/>
+            <circle cx="100" cy="60" r="48" fill="none" stroke="#2b241c" stroke-width="1.6"/>
+            <line x1="100" y1="60" x2="137" y2="29" stroke="#2b241c" stroke-width="1.6"/>
+            <line x1="100" y1="60" x2="137" y2="60" stroke="#3b78c8" stroke-width="3.5"/>
+            <line x1="137" y1="60" x2="137" y2="29" stroke="#cf4a36" stroke-width="3.5"/>
+            <circle cx="137" cy="29" r="4" fill="#a86f1c"/>
+          </svg>
+        </a>
+      </div>
+      <p class="bridge">↓ a volta vira onda</p>
+
+      <div class="stop">
+        <div class="badge">4</div>
+        <div class="card glass">
+          <div>
+            <span class="tag">Em breve</span>
+            <h2>Ondas</h2>
+            <p class="q">De onde vem a senoide?</p>
+            <p>O círculo puxado no tempo vira uma mola (hélice 3D). Amplitude, frequência e fase.</p>
+          </div>
+          <svg class="art" viewBox="0 0 200 120" aria-hidden="true">
+            <path d="M10 60 C30 10,50 10,60 60 S90 110,110 60 S140 10,160 60 S180 100,190 80" fill="none" stroke="#cf4a36" stroke-width="2.4"/>
+            <line x1="10" y1="60" x2="192" y2="60" stroke="#2b241c" stroke-width="1" opacity=".5"/>
+          </svg>
+        </div>
+      </div>
+
+      <p class="bridge">✦ em qualquer ponto da trilha</p>
+      <div class="stop">
+        <div class="badge">✦</div>
+        <div class="card glass">
+          <div>
+            <span class="tag">Em breve</span>
+            <h2>Aplicações</h2>
+            <p class="q">Para que serve tudo isso?</p>
+            <p>Medir a altura de uma parede inacessível, inclinação de rampas acessíveis e outros problemas reais.</p>
+          </div>
+          <svg class="art" viewBox="0 0 200 120" aria-hidden="true">
+            <rect x="140" y="15" width="30" height="85" fill="rgba(43,36,28,.08)" stroke="#2b241c" stroke-width="1.4"/>
+            <line x1="25" y1="100" x2="190" y2="100" stroke="#2b241c" stroke-width="1.4"/>
+            <line x1="35" y1="92" x2="140" y2="20" stroke="#3aa58a" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <circle cx="35" cy="92" r="4" fill="#a86f1c"/>
+            <path d="M60 92 A25 25 0 0 0 55.6 78" fill="none" stroke="#a86f1c" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="note glass">
+      <b>Para o professor</b>
+      A ordem 1 → 4 é a sugerida, mas cada página funciona sozinha. Em cada uma, a faixa no topo mostra em que ponto da trilha a turma está.
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 divonei.com · conteúdo de livre acesso</span>
+    <a href="/" style="text-decoration:none">← Voltar ao início</a>
+  </div>
+</footer>
+</body>
+</html>
