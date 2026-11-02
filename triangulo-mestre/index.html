@@ -127,6 +127,33 @@
     #canvasPanel.is-expanded #geoScrollContainer{ flex:1; height:auto; }
     .canvas-tool{ font-size:.75rem; font-weight:700; color:#8a5914; background:#fbf6ec; border:1px solid #ebd2a3; border-radius:.5rem; padding:.25rem .55rem; display:inline-flex; align-items:center; gap:.25rem; white-space:nowrap; }
     .canvas-tool:hover{ color:#6c4511; }
+
+  /* ---------- faixa da Trilha de Trigonometria ---------- */
+  .trilha{position:relative;z-index:5;margin:0 0 18px;border-radius:20px;padding:12px 16px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;font-family:"Instrument Sans",system-ui,sans-serif;line-height:1.4;
+    background:linear-gradient(135deg,rgba(255,255,255,.55),transparent 40%),rgba(255,252,246,.48);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);border:1px solid rgba(255,255,255,.75);box-shadow:0 24px 50px -28px rgba(80,55,20,.35),inset 0 1px 0 rgba(255,255,255,.55)}
+  .trilha-tag{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:#a86f1c;white-space:nowrap}
+  .trilha-tag b{font-weight:600}
+  .trilha ol{list-style:none;display:flex;align-items:center;justify-content:center;min-width:0;margin:0;padding:0}
+  .trilha li{display:flex;align-items:center;min-width:0}
+  .trilha li + li::before{content:"";width:clamp(10px,3vw,38px);height:1px;background:rgba(43,36,28,.12);margin:0 6px}
+  .trilha li.done + li::before,.trilha li.cur::before{background:rgba(168,111,28,.55)}
+  .trilha .st{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:.86rem;color:#5c5245;padding:4px 10px 4px 4px;border-radius:999px;white-space:nowrap;transition:background .2s}
+  .trilha a.st:hover{background:rgba(255,255,255,.55);color:#2b241c}
+  .trilha .st i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-family:Fraunces,Georgia,serif;font-size:.85rem;border:1px solid rgba(43,36,28,.12);background:rgba(255,255,255,.5);flex:none}
+  .trilha .st b{font-weight:500}
+  .trilha .done i{border-color:rgba(168,111,28,.5);color:#a86f1c}
+  .trilha .cur .st{color:#2b241c;background:rgba(255,255,255,.55)}
+  .trilha .cur .st b{font-weight:600}
+  .trilha .cur i{background:#a86f1c;border-color:#a86f1c;color:#fff}
+  .trilha .soon .st{color:#8b806f}
+  .trilha-nav{display:flex;gap:6px}
+  .trilha-pill{display:inline-flex;align-items:center;gap:6px;font-size:.84rem;text-decoration:none;padding:7px 13px;border-radius:999px;border:1px solid rgba(43,36,28,.12);background:rgba(255,255,255,.45);color:#5c5245;white-space:nowrap;transition:background .2s,color .2s,border-color .2s}
+  a.trilha-pill:hover{color:#2b241c;border-color:rgba(168,111,28,.5);background:rgba(255,255,255,.7)}
+  a.trilha-pill.next{background:#2b241c;color:#f2ece1;border-color:#2b241c}
+  a.trilha-pill.next:hover{background:#4a3d2e;color:#f2ece1}
+  span.trilha-pill{color:#8b806f;border-style:dashed}
+  @media (max-width:960px){ .trilha{grid-template-columns:1fr;gap:10px;justify-items:center} .trilha ol{flex-wrap:wrap;row-gap:6px} }
+  @media (max-width:620px){ .trilha{padding:12px 10px} .trilha .st b{display:none} .trilha .cur .st b{display:inline} .trilha ol{flex-wrap:nowrap} .trilha li + li::before{width:8px;margin:0 3px} .trilha .st{padding-right:6px} }
   </style>
 </head>
 <body class="tm-body text-slate-800 min-h-screen flex flex-col font-sans pb-24 select-none">
@@ -157,6 +184,18 @@
 
   <!-- CONTEÚDO PRINCIPAL (MODO ALUNO) -->
   <main id="mainStudentArea" class="relative z-10 max-w-xl lg:max-w-6xl mx-auto w-full px-3.5 lg:px-6 pt-3.5 lg:pt-6 flex-1">
+<!-- ========== FAIXA DA TRILHA ========== -->
+<nav class="trilha" aria-label="Trilha de Trigonometria">
+  <span class="trilha-tag"><b>Trilha Trigonometria</b> · 1 de 4</span>
+  <ol>
+    <li class="cur"><span class="st" aria-current="page"><i>1</i><b>Triângulo Mestre</b></span></li>
+    <li><a class="st" href="/relacoes-trigonometricas/"><i>2</i><b>Razões</b></a></li>
+    <li><a class="st" href="/circulo-trigonometrico/"><i>3</i><b>Círculo</b></a></li>
+    <li class="soon"><span class="st" title="Em breve"><i>4</i><b>Ondas</b></span></li>
+  </ol>
+  <div class="trilha-nav"><a class="trilha-pill next" href="/relacoes-trigonometricas/" rel="next">Próxima →</a></div>
+</nav>
+
 
     <!-- ========================================================= -->
     <!-- ABA 1: EXPLORADOR VISUAL (ESTADO CENTRALIZADO E IMUTÁVEL) -->
